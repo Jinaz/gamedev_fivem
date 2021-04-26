@@ -1119,7 +1119,7 @@ namespace fuels
                         crfuel = fuelpercent
                     });
                     SendNuiMessage(jsonstring);
-                    DisplayText(.95f, .65f, "fuel:" + VehicleFuelLevel(vehicle).ToString());
+                    //DisplayText(.95f, .65f, "fuel:" + VehicleFuelLevel(vehicle).ToString());
                 }
 
                 else
@@ -1173,7 +1173,7 @@ namespace fuels
                 else
                 {
                     vehicle.IsDriveable = true;
-                    // FIXME: No neat default behaviour in 1103 :c
+                    
                     vehicle.IsEngineRunning = true;
                 }
             }
@@ -1196,7 +1196,7 @@ namespace fuels
                     else
                     {
                         vehicle.IsDriveable = true;
-                        // FIXME: No neat default behaviour in 1103 :c
+                        
                         vehicle.IsEngineRunning = true;
                     }
                 }
