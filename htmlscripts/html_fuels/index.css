@@ -1,0 +1,46 @@
+body {
+    background: none !important;
+}
+
+#container {
+    font-size: 20px;
+    /*padding: 25px;*/
+    color: white;
+    position: fixed;
+    top: 95%;
+    left: 22.5%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(44, 44, 44);
+    height: 35px;
+    width: 200px;
+    border: 2px solid aliceblue;
+    border-radius: 7px;
+    opacity:0.9; /* allgemein */
+}
+
+button {
+    background-color: aliceblue;
+    padding: 12px;
+}
+
+input {
+    margin-bottom: 5px;
+    width: 100%;
+    font-size: 15px;
+    padding: 12px;
+}
+
+#Progress_Status {
+    width: 200px;
+    background-color: rgb(192, 0, 0);
+  }
+    
+  #myprogressBar {
+    width: 1%;
+    height: 35px;
+    background-color: #4CAF50;
+    text-align: center;
+    line-height: 32px;
+    color: black;
+  }
+    
