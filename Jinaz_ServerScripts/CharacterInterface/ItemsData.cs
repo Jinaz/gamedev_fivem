@@ -19,6 +19,7 @@ namespace CharacterInterface
         SM_FOOD = 8,
         BG_FOOD = 9,
         LOCKPICK = 10,
+        EMPTY = 11,
 
 
     }

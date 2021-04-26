@@ -79,6 +79,39 @@ namespace CharacterInterface
             EntityDecoration.RegisterProperty(thirst_key, DecorationType.Float);
 
             Tick += OnTick;
+            Tick += ItemUsage;
+        }
+
+        private async Task ItemUsage()
+        {
+            inv.items[0] = ItemsData.SM_WATER;
+            if (!playerped.IsInVehicle() 
+                || (playerped.IsInVehicle() 
+                && playerped.CurrentVehicle.Driver != playerped))
+            if ( Game.IsControlJustReleased(0, Control.Talk))
+            {
+                    //open UI
+
+                int slotnumber = 0;
+                UseItem(inv.items[0], slotnumber);
+            }
+        }
+
+        private void UseItem(ItemsData itemnum, int slotnumber)
+        {
+            if (itemnum == ItemsData.SM_WATER)
+            {
+                inv.items[slotnumber] = ItemsData.EMPTY;
+                thirst = thirst + 0.25f;
+                thirst = thirst > 1f ? 1f : thirst;
+            }
+            if (itemnum == ItemsData.SM_FOOD)
+            {
+                inv.items[slotnumber] = ItemsData.EMPTY;
+                hunger = hunger + 0.25f;
+                hunger = hunger > 1f ? 1f : hunger;
+            }
+
         }
 
         private static void DisplayText(float x, float y, string text)
