@@ -30,3 +30,27 @@
 *.exe
 *.out
 *.app
+*.CopyComplete
+*.cache
+*.pdb
+
+#c sharp
+Jinaz_ServerScripts/.vs/
+Jinaz_ServerScripts/packages/
+Jinaz_ServerScripts/CharacterInterface/obj/
+Jinaz_ServerScripts/CharacterInterfaceServer/obj/
+Jinaz_ServerScripts/ConsoleCommands/obj/
+Jinaz_ServerScripts/ConsoleCommandsServer/obj/
+Jinaz_ServerScripts/FuelSystem/bin/
+Jinaz_ServerScripts/FuelSystem/obj/
+Jinaz_ServerScripts/FuelSystemServer/obj/
+Jinaz_ServerScripts/garagescript/bin/
+Jinaz_ServerScripts/garagescript/obj/
+Jinaz_ServerScripts/garagescriptserver/obj/
+Jinaz_ServerScripts/lscustoms/obj/
+Jinaz_ServerScripts/lscustomsserver/obj/
+*.suo
+*.lock
+*.ide
+*.ide-shm
+*.ide-wal
