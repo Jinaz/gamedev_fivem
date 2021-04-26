@@ -54,3 +54,6 @@ Jinaz_ServerScripts/lscustomsserver/obj/
 *.ide
 *.ide-shm
 *.ide-wal
+/Jinaz_ServerScripts/loginscript/obj/Debug
+/Jinaz_ServerScripts/loginscriptserver/obj/Debug
+/Jinaz_ServerScripts/loginscriptserver/bin/Debug
