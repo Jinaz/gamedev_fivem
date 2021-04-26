@@ -51,8 +51,8 @@ namespace CharacterInterface
     {
         float hunger;
         float thirst;
-        float consumptionRateThirst = 0.001f;
-        float consumptionRateHunger = 0.0005f;
+        float consumptionRateThirst = 0.00001f;
+        float consumptionRateHunger = 0.000005f;
         float consumedThirst = 0f;
         float consumedHunger = 0f;
 
@@ -64,22 +64,32 @@ namespace CharacterInterface
         string hunger_key = "_hunger_key";
         string thirst_key = "_thirst_key";
 
+        bool initialized = false;
+
         public CharacterInterface()
         {
-            EventHandlers["onResourceStart"] += new Action<string>(OnResourceStart);
-
+            
             hunger = 0.75f;
             thirst = 0.75f;
 
             t1 = new Timer(0);
-            t1.Limit = 100;
+            t1.Limit = 1000;
             playerped = Game.PlayerPed;
             EntityDecoration.RegisterProperty(hunger_key, DecorationType.Float);
             EntityDecoration.RegisterProperty(thirst_key, DecorationType.Float);
 
             Tick += OnTick;
         }
-        
+
+        private static void DisplayText(float x, float y, string text)
+        {
+            BeginTextCommandDisplayText("STRING");
+            AddTextComponentString(text);
+            SetTextScale(1f, .5f);
+            SetTextCentre(true);
+            EndTextCommandDisplayText(x, y);
+        }
+
         private async Task OnTick()
         {
             if (!inventoryinit)
@@ -114,7 +124,10 @@ namespace CharacterInterface
                 consumedHunger = 0f;
             }
 
+            DisplayText(.95f, .55f, $"thirst: {thirst}");
+            DisplayText(.95f, .5f, $"hunger: {hunger}");
 
+            await Task.FromResult(0);
         }
 
         private void initInv(Ped playerped)
@@ -158,67 +171,6 @@ namespace CharacterInterface
             return playerped;
         }
 
-        private void OnResourceStart(string obj)
-        {
-            playerped = Game.PlayerPed;
-
-            TriggerServerEvent("charainter:Login");
-            
-            //TODO connect SQL on start
-            //get player data
-
-            //if first time login
-            //if steamid in table then not first time --> open character selection
-            //if not empty table
-            //
-
-
-            RegisterCommand("getCharaInfo", new Action<int, List<object>, string>(async (source, args, raw) =>
-            {
-                playerped.Style.GetAllProps();
-
-                playerped.Style.GetAllComponents();
-
-                foreach (PedComponent pc in playerped.Style.GetAllComponents())
-                {
-                    Debug.WriteLine($"{pc} : {pc.Count} : {pc.TextureCount}");
-                }
-
-                foreach (PedComponents pc in (PedComponents[])Enum.GetValues(typeof(PedComponents)))
-                {
-                    PedComponent pedcomp = playerped.Style[pc];
-                    Debug.WriteLine($"{pc.ToString()} : {pedcomp.Count.ToString()}");
-                    if (pedcomp.HasTextureVariations)
-                    {
-                        Debug.WriteLine($"{pc.ToString()} : {pedcomp.TextureCount} Variations");
-                        for (int txi = 0; txi < pedcomp.TextureCount; txi++)
-                        {
-
-                        }
-                    }
-                }
-
-                foreach (PedProps pc in (PedProps[])Enum.GetValues(typeof(PedProps)))
-                {
-                    PedProp pedprop = playerped.Style[pc];
-                    Debug.WriteLine($"{pc.ToString()} : {pedprop.Count.ToString()}");
-
-                    if (pedprop.HasTextureVariations)
-                    {
-                        Debug.WriteLine($"{pc.ToString()} : {pedprop.TextureCount} Variations");
-                        for (int txi = 0; txi < pedprop.TextureCount; txi++)
-                        {
-
-                        }
-                    }
-
-                }
-
-
-
-                
-            }
-            ), false);
-        }
+        
     }
 }

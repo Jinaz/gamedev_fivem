@@ -49,7 +49,6 @@
   <ItemGroup>
     <Compile Include="Animations.cs" />
     <Compile Include="EntityDecoration.cs" />
-    <Compile Include="FRHud.cs" />
     <Compile Include="fuels.cs" />
     <Compile Include="Gasstations.cs" />
     <Compile Include="LockFunctions.cs" />
