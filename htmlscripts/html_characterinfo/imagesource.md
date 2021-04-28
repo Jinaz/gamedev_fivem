@@ -1,0 +1,1 @@
+https://armedia.com/blog/software-quality-control-important/

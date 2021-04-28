@@ -17,10 +17,21 @@ body {
     border-radius: 7px;
     opacity:0.3; /* allgemein */
 }
-#div1 {
-    width: 100%;
-    height: 100%;
-  }
+
+.container2{
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.top-right {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+  color: #000000;
+  opacity: 1;
+}
+
 .button {
     padding: 25px 25px;
     font-size: 24px;
@@ -36,17 +47,24 @@ body {
 
   .button:hover {background-color: #2d552e}
 
-  .button:active {
-    background-color: #3e8e41;
-    box-shadow: 0 5px rgb(0, 0, 0);
-    transform: translateY(4px);
-  }
-
 input {
     margin-bottom: 5px;
     width: 10%;
     font-size: 15px;
     padding: 12px;
+}
+.imageSmall{
+  border-style: solid;
+}
+
+.div1{
+  width: 100%;
+  height: 100%;
+}
+
+.div2{
+  width: 100%;
+  height: 100%;
 }
 
 * {
