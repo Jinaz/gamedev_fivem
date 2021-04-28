@@ -1,4 +1,5 @@
 
+var dragcount = 1;
 function allowDrop(ev) {
     ev.preventDefault();
 }
@@ -27,31 +28,40 @@ function drop(ev) {
 
     console.log(document.getElementById(ev.target.id));
     //allow from inv to ground & inv to inv
-    if (ev.dataTransfer.getData("parent").includes("inv")) {
-        if (document.getElementById(ev.target.id).id != null) {
+    if (document.getElementById(ev.target.id) != null)
+    {
+        if (document.getElementById(ev.target.id).id.includes("inv")) {
+            console.log("incldes inv");
+            var outercontainerID = ev.dataTransfer.getData("parent");
+            var outercontainer = document.getElementById(outercontainerID);
+            document.getElementById(ev.target.id).appendChild(outercontainer);
+    
+        }
+        else if (document.getElementById(ev.target.id).id.includes("ground")){
+            var outercontainerID = ev.dataTransfer.getData("parent");
+            var outercontainer = document.getElementById(outercontainerID);
+            
 
-            if (document.getElementById(ev.target.id).id.includes("inv")) {
-                console.log(document.getElementById(ev.target.id));
-                document.getElementById(ev.target.id).appendChild(document.getElementById(data));
+            document.getElementById(ev.target.id).appendChild(outercontainer);
+        }
+        else if (document.getElementById(ev.target.id).id.includes("consume")){
+            var outercontainerID = ev.dataTransfer.getData("parent");
+            var outercontainer = document.getElementById(outercontainerID);
+            
+
+            var outercontainerchildren = outercontainer.childNodes;
+            for (i=0;i<outercontainerchildren.length;i++){
+                outercontainerchildren[i].remove();
             }
-            else if (document.getElementById(ev.target.id).id.includes("ground")) {
-                ev.target.appendChild(document.getElementById(data));
-            } else if (document.getElementById(ev.target.id).id.includes("consume")) {
+            outercontainer.remove()
+            dragcount--;
 
-                var consumedItem = ev.dataTransfer.getData("itemname");
-                var slotnumberItem = ev.dataTransfer.getData("slotnumber");
-                console.log("try delete");
-                console.log(document.getElementById(data));
-                document.getElementById(data).remove();
-
-                console.log(consumedItem);
-                console.log(slotnumberItem);
-
-
-            }
-
+            document.getElementById(ev.target.id).appendChild(outercontainer);
         }
     }
+
+
+
     //from ground to inv
     if (ev.dataTransfer.getData("parent").includes("ground")) {
         if (document.getElementById(ev.target.id).id.includes("inv")) {
@@ -61,24 +71,32 @@ function drop(ev) {
 
 }
 
-function generateID(){
-
-}
-
 function clickButtonDebug() {
-    var tag = document.createElement("IMG");
-    tag.setAttribute("id", "drag6");
-    tag.setAttribute("src", "A.jpg");
-    tag.setAttribute("draggable", "true");
-    tag.setAttribute("ondragstart", "drag(event)");
-    tag.setAttribute("width", "150");
-    tag.setAttribute("height", "150");
-    tag.setAttribute("itemname", "SM_Water");
-    console.log(tag.getAttribute("id"));
-    var element = document.getElementById("ground1");
-    element.appendChild(tag);
+    var image = document.createElement("IMG");
+    image.setAttribute("id", "drag"+dragcount);
+    image.setAttribute("src", "A.jpg");
+    image.setAttribute("draggable", "true");
+    image.setAttribute("ondragstart", "drag(event)");
+    image.setAttribute("width", "150");
+    image.setAttribute("height", "150");
+    image.setAttribute("itemname", "SM_Water");
+    console.log(image.getAttribute("id"));
+    
+    var imagetext = document.createElement("DIV");
+    imagetext.setAttribute("id", "imgText"+dragcount);
+    imagetext.setAttribute("class","top-right");
+
+    var outercontainer = document.createElement("DIV");
+    outercontainer.setAttribute("id", "imgcontainer"+dragcount);
+    outercontainer.setAttribute("class","container2");
+    outercontainer.appendChild(image);
+    outercontainer.appendChild(imagetext);
+
+    var element = document.getElementById("inv2");
+    element.appendChild(outercontainer);
     console.log("done");
 
+    dragcount++;
 }
 
 function printSth() {
