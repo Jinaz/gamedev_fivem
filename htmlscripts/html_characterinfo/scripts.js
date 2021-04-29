@@ -100,5 +100,7 @@ function clickButtonDebug() {
 }
 
 function printSth() {
-    console.log("AAAA");
+    console.log("close triggered")
+    $.post('http://characterinfo/exit', JSON.stringify({ exit: "Success" }));
+    return
 }

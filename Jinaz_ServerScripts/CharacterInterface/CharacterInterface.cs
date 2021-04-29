@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
 using static CitizenFX.Core.Native.API;
+using Newtonsoft.Json;
 
 
 namespace CharacterInterface
@@ -80,6 +81,24 @@ namespace CharacterInterface
 
             Tick += OnTick;
             Tick += ItemUsage;
+
+            SetNuiFocus(false, false);
+
+            RegisterNuiCallbackType("exit");
+            EventHandlers["__cfx_nui:exit"] += new Action<IDictionary<string, object>, CallbackDelegate>(error);
+
+
+        }
+
+        private void error(IDictionary<string, object> arg1, CallbackDelegate arg2)
+        {
+            string jsonstring;
+            jsonstring = JsonConvert.SerializeObject(new
+            {
+                toggle = false
+            });
+            SendNuiMessage(jsonstring);
+            SetNuiFocus(false, false);
         }
 
         private async Task ItemUsage()
@@ -90,10 +109,19 @@ namespace CharacterInterface
                 && playerped.CurrentVehicle.Driver != playerped))
             if ( Game.IsControlJustReleased(0, Control.Talk))
             {
+                    
                     //open UI
 
-                int slotnumber = 0;
-                UseItem(inv.items[0], slotnumber);
+                    string jsonstring;
+                    jsonstring = JsonConvert.SerializeObject(new
+                    {
+                        toggle = true
+                    });
+                    //SendNuiMessage(jsonstring);
+
+                    int slotnumber = 0;
+                    SetNuiFocus(true, true);
+                    UseItem(inv.items[0], slotnumber);
             }
         }
 

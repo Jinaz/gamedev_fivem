@@ -1,0 +1,163 @@
+<html>
+<!--<style>
+
+.button {
+    padding: 25px 25px;
+    font-size: 24px;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: #fff;
+    background-color: #33cf38;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px rgb(0, 0, 0);
+  }
+
+  .button:hover {background-color: #2d552e}
+</style>-->
+    
+	<head>
+		<link rel="stylesheet" href="reset.css" type="text/css">
+        <link rel="stylesheet" href="index.css" type="text/css">
+        <script src="nui://game/ui/jquery.js" type="text/javascript"></script>
+	</head>
+	<body>
+		<div id="container">
+            <form id="form">
+
+                <div class="row">
+                    <div class="column">
+                      <table>
+                        <tr>
+                            <td><div class="div1" id="inv1" ondrop="drop(event)" ondragover="allowDrop(event)" slotnum=0>
+                                <div id = "imgcontainer0" class="container2">
+                                <img id="drag0" class="items" src="A.jpg" draggable="true" ondragstart="drag(event)" width="150" height="150">
+                                <div id="imgText0" class="top-right">Top Right</div>
+                                </div>
+                            </div></td>
+                            <td><div class="div1" id="inv2" ondrop="drop(event)" ondragover="allowDrop(event)" slotnum=0>
+                                
+                            </div></td>
+                            <td><div class="div1" id="inv3" ondrop="drop(event)" ondragover="allowDrop(event)" slotnum=0>
+                                </div></td>
+                            <td><div class="div1" id="inv4" ondrop="drop(event)" ondragover="allowDrop(event)" slotnum=0>
+                                </div></td>
+                            <td><div class="div1" id="inv5" ondrop="drop(event)" ondragover="allowDrop(event)" slotnum=0>
+                                </div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="div1" id="inv6" ondrop="drop(event)" ondragover="allowDrop(event)" slotnum=0 width="150" height="150">
+                                
+                            </div></td>
+                            <td><div class="div1" id="inv7" ondrop="drop(event)" ondragover="allowDrop(event)" slotnum=0>
+                               
+                            </div></td>
+                            <td><div class="div1" id="inv8" ondrop="drop(event)" ondragover="allowDrop(event)" slotnum=0>
+                                
+                            </div></td>
+                            <td><div class="div1" id="inv9" ondrop="drop(event)" ondragover="allowDrop(event)" slotnum=0>
+                                
+                            </div></td>
+                            <td><div class="div1" id="inv10" ondrop="drop(event)" ondragover="allowDrop(event)" slotnum=0>
+                               
+                            </div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="div1" id="inv11" ondrop="drop(event)" ondragover="allowDrop(event)" slotnum=0>
+                                
+                            </div></td>
+                            <td><div class="div1" id="inv12" ondrop="drop(event)" ondragover="allowDrop(event)" slotnum=0>
+                                
+                            </div></td>
+                            <td><div class="div1" id="inv13" ondrop="drop(event)" ondragover="allowDrop(event)" slotnum=0>
+                            
+                            </div></td>
+                            <td><div class="div1" id="inv14" ondrop="drop(event)" ondragover="allowDrop(event)" slotnum=0>
+                               
+                            </div></td>
+                            <td><div class="div1" id="inv15" ondrop="drop(event)" ondragover="allowDrop(event)" slotnum=0>
+                              
+                            </div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="div1" id="inv16" ondrop="drop(event)" ondragover="allowDrop(event)" slotnum=0>
+                                </div></td>
+                            <td><div class="div1" id="inv17" ondrop="drop(event)" ondragover="allowDrop(event)" slotnum=0>
+                                </div></td>
+                            <td><div class="div1" id="inv18" ondrop="drop(event)" ondragover="allowDrop(event)" slotnum=0>
+                                </div></td>
+                            <td><div class="div1" id="inv19" ondrop="drop(event)" ondragover="allowDrop(event)" slotnum=0>
+                                </div></td>
+                            <td><div class="div1" id="inv20" ondrop="drop(event)" ondragover="allowDrop(event)" slotnum=0>
+                                </div></td>
+                        </tr>
+                      </table>
+                    </div>
+                    
+                    <div class="column">
+                        <table>
+                            <tr>
+                                <td><div class="div2" id="ground1" ondrop="drop(event)" ondragover="allowDrop(event)"></div></td>
+                                <td><div class="div2" id="ground2" ondrop="drop(event)" ondragover="allowDrop(event)"></div></td>
+                                <td><div class="div2" id="ground3" ondrop="drop(event)" ondragover="allowDrop(event)"></div></td>
+                                <td><div class="div2" id="ground4" ondrop="drop(event)" ondragover="allowDrop(event)"></div></td>
+                                <td><div class="div2" id="ground5" ondrop="drop(event)" ondragover="allowDrop(event)"></div></td>
+                            </tr>
+                            <tr>
+                                <td><div class="div2" id="ground6" ondrop="drop(event)" ondragover="allowDrop(event)"></div></td>
+                                <td><div class="div2" id="ground7" ondrop="drop(event)" ondragover="allowDrop(event)"></div></td>
+                                <td><div class="div2" id="ground8" ondrop="drop(event)" ondragover="allowDrop(event)"></div></td>
+                                <td><div class="div2" id="ground9" ondrop="drop(event)" ondragover="allowDrop(event)"></div></td>
+                                <td><div class="div2" id="ground10" ondrop="drop(event)" ondragover="allowDrop(event)"></div></td>
+                            </tr>
+                            <tr>
+                                <td><div class="div2" id="ground11" ondrop="drop(event)" ondragover="allowDrop(event)"></div></td>
+                                <td><div class="div2" id="ground12" ondrop="drop(event)" ondragover="allowDrop(event)"></div></td>
+                                <td><div class="div2" id="ground13" ondrop="drop(event)" ondragover="allowDrop(event)"></div></td>
+                                <td><div class="div2" id="ground14" ondrop="drop(event)" ondragover="allowDrop(event)"></div></td>
+                                <td><div class="div2" id="ground15" ondrop="drop(event)" ondragover="allowDrop(event)"></div></td>
+                            </tr>
+                            <tr>
+                                <td><div class="div2" id="ground16" ondrop="drop(event)" ondragover="allowDrop(event)"></div></td>
+                                <td><div class="div2" id="ground17" ondrop="drop(event)" ondragover="allowDrop(event)"></div></td>
+                                <td><div class="div2" id="ground18" ondrop="drop(event)" ondragover="allowDrop(event)"></div></td>
+                                <td><div class="div2" id="ground19" ondrop="drop(event)" ondragover="allowDrop(event)"></div></td>
+                                <td><div class="div2" id="ground20" ondrop="drop(event)" ondragover="allowDrop(event)"></div></td>
+                            </tr>
+                          </table>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="column">
+                        <img class="imageSmall" id="consume"src="consume.png" width="100" height="100"ondrop="drop(event)" ondragover="allowDrop(event)">
+
+                        <button class="button">Drop</button>
+                        <label for="fname">Amount</label>
+                        <input class=input type="text" id="fname" name="fname" >
+                    </div>
+
+                    <div class="column">
+                        <button id="addObj" class="button">Click Me</button>
+                        <button id="printsth" class="button">Click Me 2</button>
+                    </div> 
+
+                  </div>
+                </div>
+                <br>
+                
+
+                <!--
+                <label id="aAAAA">false</label>
+                <br>
+                <input placeholder="Type here" id="input"></input>
+                <br>
+                <button id="submit" type="submit">Submit</button>
+                <button id="close">Close</button>-->
+            </form>
+		</div>
+        <script src="./index.js" type="text/javascript"></script>
+    <!--<script src="./scripts.js" type="text/javascript"></script>-->
+       <!-- <script src="./index.js" type="text/javascript"></script>-->
+	</body>
+</html>

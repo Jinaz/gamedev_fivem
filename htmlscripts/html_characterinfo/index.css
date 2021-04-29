@@ -17,7 +17,9 @@ body {
     border-radius: 7px;
     opacity:0.3; /* allgemein */
 }
-
+.items{
+  opacity:1.0;
+}
 .container2{
   position: relative;
   text-align: center;
@@ -46,6 +48,8 @@ body {
   }
 
   .button:hover {background-color: #2d552e}
+  .button:active{color: lime}
+
 
 input {
     margin-bottom: 5px;
@@ -94,7 +98,7 @@ input {
 
     width: 750px;
     height: 600px;
-    border: 1px solid #ddd;
+    border: 1px solid #000000;
   }
   
   th, td {
