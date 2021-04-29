@@ -1,4 +1,5 @@
-$(function () {
+$.noConflict();
+jQuery(document).ready(function ( $ ) {
     function display(bool) {
         if (bool) {
             $("#container").show();
@@ -7,8 +8,8 @@ $(function () {
         }
     }
 
-    //display(false)
-
+    display(false)
+    
 
     window.addEventListener('message', function (event) {
         var item = event.data;
