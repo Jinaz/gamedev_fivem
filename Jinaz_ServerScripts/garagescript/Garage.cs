@@ -143,7 +143,7 @@ namespace garagescript
             EventHandlers["garage:findcar"] += new Action<float, float, float>(FindCar);
 
             EventHandlers["onClientResourceStart"] += new Action<string>(OnClientResourceStart);
-            SetNuiFocus(false, false);
+            //SetNuiFocus(false, false);
 
             Tick += DisplayCarUI;
             Tick += VehSpawner;
@@ -380,7 +380,7 @@ namespace garagescript
 
         public void OnClientResourceStart(string resourceName)
         {
-
+            if (GetCurrentResourceName() != resourceName) return;
             Debug.WriteLine(resourceName);
 
             RegisterCommand("getInf", new Action<int, List<object>, string>(async (source, args, raw) =>

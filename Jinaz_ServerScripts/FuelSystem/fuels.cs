@@ -247,7 +247,7 @@ namespace fuels
             lastVehicle = null;
 
             EventHandlers["onClientResourceStart"] += new Action<string>(OnClientResourceStart);
-            SetNuiFocus(false, false);
+            //SetNuiFocus(false, false);
 
 
             Tick += OnTick;
@@ -746,6 +746,7 @@ namespace fuels
         public void OnClientResourceStart(string resourceName)
         {
 
+            if (GetCurrentResourceName() != resourceName) return;
             Debug.WriteLine(resourceName);
 
 

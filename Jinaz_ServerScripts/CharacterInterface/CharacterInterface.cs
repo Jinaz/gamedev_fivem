@@ -82,7 +82,7 @@ namespace CharacterInterface
             Tick += OnTick;
             Tick += ItemUsage;
 
-            SetNuiFocus(false, false);
+            //SetNuiFocus(false, false);
 
             RegisterNuiCallbackType("exit");
             EventHandlers["__cfx_nui:exit"] += new Action<IDictionary<string, object>, CallbackDelegate>(error);
@@ -104,6 +104,7 @@ namespace CharacterInterface
         private async Task ItemUsage()
         {
             inv.items[0] = ItemsData.SM_WATER;
+            Console.WriteLine(ItemsData.SM_WATER.ToString("g"));
             if (!playerped.IsInVehicle() 
                 || (playerped.IsInVehicle() 
                 && playerped.CurrentVehicle.Driver != playerped))

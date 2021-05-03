@@ -74,8 +74,9 @@ namespace fuelsserver
             
         }
 
-        private void OnResourceStart(string obj)
+        private void OnResourceStart(string resourceName)
         {
+            if (GetCurrentResourceName() != resourceName) return;
             Debug.WriteLine($"Server Side started");
         }
 

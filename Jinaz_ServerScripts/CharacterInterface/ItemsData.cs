@@ -20,7 +20,10 @@ namespace CharacterInterface
         BG_FOOD = 9,
         LOCKPICK = 10,
         EMPTY = 11,
-
+        petrolcan=12,
+        fireextinguisher=13,
+        parachute=14,
+        hazardcan=15
 
     }
 }

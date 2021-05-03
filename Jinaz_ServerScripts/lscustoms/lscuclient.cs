@@ -34,8 +34,10 @@ namespace lscustoms
             }
         }
 
-        private void OnClientResourceStart(string input)
+        private void OnClientResourceStart(string resourceName)
         {
+            if (GetCurrentResourceName() != resourceName) return;
+
             RegisterCommand("showMods", new Action<int, List<object>, string>(async (source, args, raw) =>
             {
 

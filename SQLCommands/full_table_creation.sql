@@ -1,18 +1,18 @@
 
-drop table users;
+
 create table users(
 steamid VARCHAR(25) primary key,
 bantime DATE,
 ip VARCHAR(25)
 );
-drop table HangarTable;
+
 CREATE TABLE `HangarTable` (
 	`planeID` INT NOT NULL,
 	`steamID_chara` VARCHAR(25),
 	`planeName` VARCHAR(25),
 	PRIMARY KEY (`planeID`)
 );
-drop table SpawnPoints;
+
 CREATE TABLE `SpawnPoints` (
 	`steamID_chara` VARCHAR(25),
 	`PointID1` BOOLEAN,
@@ -23,7 +23,7 @@ CREATE TABLE `SpawnPoints` (
 	`PointID6` BOOLEAN,
 	PRIMARY KEY (`steamID_chara`)
 );
-drop table CharacterTable;
+
 CREATE TABLE `CharacterTable` (
 	`steamID_chara` VARCHAR(25) NOT NULL,
 	`steamID` INT NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE `CharacterTable` (
 	`isEMC` BOOLEAN,
 	PRIMARY KEY (`steamID_chara`)
 );
-drop table CharacterLookTable;
+
 CREATE TABLE `CharacterLookTable` (
 	`lookID` INT NOT NULL,
     `active` BOOL,
@@ -88,7 +88,7 @@ CREATE TABLE `CharacterLookTable` (
 	`Unknown9_variation` INT,
 	PRIMARY KEY (`lookID`)
 );
-drop table InventoryTable;
+
 CREATE TABLE `InventoryTable` (
 	`steamID_chara` VARCHAR(25),
 	`slot0` INT,
@@ -113,7 +113,7 @@ CREATE TABLE `InventoryTable` (
 	`slot19` INT,
 	PRIMARY KEY (`steamID_chara`)
 );
-drop table CarTable;
+
 CREATE TABLE `CarTable` (
 	`steamID_chara` VARCHAR(25),
     `carID` INT NOT NULL,
@@ -170,18 +170,74 @@ CREATE TABLE `CarTable` (
 	`Livery` INT, 
 	PRIMARY KEY (`carID`)
 );
-drop table BoatTable;
+
 CREATE TABLE `BoatTable` (
 	`boatID` INT NOT NULL,
 	`steamID_chara` VARCHAR(25),
 	`boatName` VARCHAR(25),
 	PRIMARY KEY (`boatID`)
 );
-drop table WeaponTable;
+
 CREATE TABLE `WeaponTable` (
 	`steamID_chara` VARCHAR(25),
 	`melee` INT,
 	`offhand` INT,
 	`mainweapon` INT,
+	PRIMARY KEY (`steamID_chara`)
+);
+
+
+CREATE TABLE `BoxTableHome` (
+	`steamID_chara` VARCHAR(25),
+	`slot0` INT,
+	`slot1` INT,
+	`slot2` INT,
+	`slot3` INT,
+	`slot4` INT,
+	`slot5` INT,
+	`slot6` INT,
+	`slot7` INT,
+	`slot8` INT,
+	`slot9` INT,
+	`slot10` INT,
+	`slot11` INT,
+	`slot12` INT,
+	`slot13` INT,
+	`slot14` INT,
+	`slot15` INT,
+	`slot16` INT,
+	`slot17` INT,
+	`slot18` INT,
+	`slot19` INT,
+    `slot20` INT,
+	`slot21` INT,
+	`slot22` INT,
+	`slot23` INT,
+	`slot24` INT,
+	`slot25` INT,
+	`slot26` INT,
+	`slot27` INT,
+	`slot28` INT,
+	`slot29` INT,
+    `slot30` INT,
+	`slot31` INT,
+	`slot32` INT,
+	`slot33` INT,
+	`slot34` INT,
+	`slot35` INT,
+	`slot36` INT,
+	`slot37` INT,
+	`slot38` INT,
+	`slot39` INT,
+    `slot40` INT,
+	`slot41` INT,
+	`slot42` INT,
+	`slot43` INT,
+	`slot44` INT,
+	`slot45` INT,
+	`slot46` INT,
+	`slot47` INT,
+	`slot48` INT,
+	`slot49` INT,
 	PRIMARY KEY (`steamID_chara`)
 );
