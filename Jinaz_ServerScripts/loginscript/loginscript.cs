@@ -11,6 +11,7 @@ using static CitizenFX.Core.Native.API;
 using CitizenFX.Core.UI;
 using System.Drawing;
 
+
 namespace loginscript
 {
     public class loginscript : BaseScript
@@ -23,27 +24,16 @@ namespace loginscript
             EventHandlers["onClientResourceStart"] += new Action<string>(OnResourceStart);
             EventHandlers["loginscr:response"] += new Action<string>(responsePrint);
             EventHandlers["loginscr:respondPeds"] += new Action<Dictionary<string, string>[]>(respPeds);
+            
 
             //SetNuiFocus(true,true);
         }
 
+        
+
         private void respPeds(Dictionary<string, string>[] arg2)
         {
-            foreach (Dictionary<string, string> peddict in arg2)
-            {
-                foreach (string key in peddict.Keys)
-                {
-                    Ped ped = new Ped(0);
-
-                    foreach (PedComponents pc in (PedComponents[])Enum.GetValues(typeof(PedComponents)))
-                    {
-                        if (pc.ToString() == key)
-                            ped.Style[pc].Index = Int16.Parse(peddict[key]);
-                        else if (key.Contains(pc.ToString()) && key.Length > pc.ToString().Length)
-                            ped.Style[pc].TextureIndex = Int16.Parse(peddict[key]);
-                    }
-                }
-            }
+            Console.WriteLine("method moved to charcterinterface");
 
         }
 
@@ -155,7 +145,7 @@ namespace loginscript
             RegisterCommand("triggerlogin", new Action<int, List<object>, string>(async (source, args, raw) =>
             {
                 Console.WriteLine("login triggered");
-                TriggerServerEvent("cbc:login");
+                TriggerServerEvent("cbc:getChars");
             }),false);
         }
     }

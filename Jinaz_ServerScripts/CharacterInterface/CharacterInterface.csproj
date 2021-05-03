@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CharacterAtts.cs" />
     <Compile Include="CharacterInterface.cs" />
     <Compile Include="CharaLooks.cs" />
     <Compile Include="EntityDecoration.cs" />

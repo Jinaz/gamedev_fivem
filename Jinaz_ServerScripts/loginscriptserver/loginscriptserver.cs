@@ -4,7 +4,7 @@ using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using CharacterInterface;
 using CitizenFX.Core;
 using MySql.Data.MySqlClient;
 using static CitizenFX.Core.Native.API;
@@ -33,10 +33,13 @@ namespace loginscriptserver
 
         }
 
-        private void getAllChars([FromSource]Player source)
+        private async void getAllChars([FromSource]Player source)
         {
-            List<string> playerpedsids = new List<string>();
+            string steamid = getSteamID(source);
+            //List<string> playerpedsids = await SelectCharacterIDS(source);
+            //source.TriggerEvent("loginscr:setPlayerAtts", );
 
+            await SelectCharacterIDS(source);
         }
 
         private async Task displayNumberOfPlayer()
@@ -64,6 +67,35 @@ namespace loginscriptserver
             conn.Close();
 
         }
+
+        private async Task<long> numOfCharas(Player source)
+        {
+
+            MySqlConnection conn = new MySqlConnection(connStr);
+            long messagesNo = 0;
+            try
+            {
+                await conn.OpenAsync();
+
+                string testSQL = $"SELECT count(0) from charactertable where steamID='{getSteamID(source)}'";
+                MySqlCommand command = new MySqlCommand(testSQL, conn);
+
+                messagesNo = (long)await command.ExecuteScalarAsync();
+
+                Debug.WriteLine($"number of entries in database: {messagesNo} ");
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($" {ex} ");
+            }
+
+            conn.Close();
+
+            return messagesNo;
+
+        }
+
 
         public static string getBetween(string strSource, string searchString)
         {
@@ -122,9 +154,9 @@ namespace loginscriptserver
             }
         }
 
-        private async Task selectCharacterIDS(Player source)
+        private async Task SelectCharacterIDS(Player source)
         {
-            List<string> playerpedsids = new List<string>();
+            
 
             string sqlstatement = $"select * from charactertable where steamID='{getSteamID(source)}';";
             MySqlConnection conn = new MySqlConnection(connStr);
@@ -133,36 +165,69 @@ namespace loginscriptserver
 
                 await conn.OpenAsync();
 
-                if (sqlstatement.ToLower().Contains("select"))
+                int charanum = Convert.ToInt32(await numOfCharas(source));
+
+                //SQL string
+                string sql = sqlstatement;
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+
+                //reader
+                DbDataReader rdr = (DbDataReader)await cmd.ExecuteReaderAsync();
+                //rdr.
+                source.TriggerEvent("loginscr:response", "start of reader");
+                int i = 0;
+                //source.TriggerEvent("loginscr:response", rdr.);
+                
+                //init 2D array
+                string[][] Values = new string[charanum][];
+                for (int x = 0; x < charanum; x++)
                 {
-
-                    //SQL string
-                    string sql = sqlstatement;
-                    MySqlCommand cmd = new MySqlCommand(sql, conn);
-
-                    //reader
-                    DbDataReader rdr = (DbDataReader)await cmd.ExecuteReaderAsync();
-                    source.TriggerEvent("loginscr:response", rdr.ToString());
-                    int i = 0;
-                    while (await rdr.ReadAsync())
-                    {
-                        if (rdr[0] == "steamID_chara")
-                        {
-                            playerpedsids.Add(rdr[1].ToString());
-                        }
-                        string printed = $"{rdr[0]} -- {rdr[1]}";
-                        Console.WriteLine(printed);
-                        source.TriggerEvent("loginscr:response", printed);
-                        i++;
-                    }
-                    rdr.Close();
-
+                    Values[x] = new string[12];
                 }
+
+                while (await rdr.ReadAsync())
+                {
+                    
+                        Values[i][0] = rdr["steamID_chara"].ToString();
+                        Values[i][1] = rdr["steamID"].ToString();
+                        Values[i][2] = rdr["CharaName"].ToString();
+                        Values[i][3] = rdr["isjailed"].ToString();
+                        Values[i][4] = rdr["canspawnboat"].ToString();
+                        Values[i][5] = rdr["canspawnplane"].ToString();
+                        Values[i][6] = rdr["moneybank"].ToString();
+                        Values[i][7] = rdr["moneyhand"].ToString();
+                        Values[i][8] = rdr["job"].ToString();
+                        Values[i][9] = rdr["ispolice"].ToString();
+                        Values[i][10] = rdr["canspawntow"].ToString();
+                        Values[i][11] = rdr["isEMC"].ToString();
+                    
+                    i++;
+                }
+
+                //peddict[i].Add();
+                rdr.Close();
+                
+                for(i= 0; i < charanum; i++)
+                {
+                    for (int s1=0; s1 < 12; s1++)
+                    {
+                        source.TriggerEvent("loginscr:response", Values[i][s1]);
+                    }
+                }
+
+                
+                for (i= 0; i < charanum; i++)
+                    source.TriggerEvent("loginscr:setPlayerAtts", i, Values[i][0], Values[i][1], Values[i][2], Values[i][3], Values[i][4], Values[i][5], Values[i][6], Values[i][7], Values[i][8], Values[i][9], Values[i][10], Values[i][11]);
+
+
+
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.StackTrace);
             }
+
+            //return playerpedsids;
         }
 
         private async Task insertPlayerPed(Player source)
@@ -316,17 +381,14 @@ namespace loginscriptserver
 
             //load via SQL character look
             Debug.WriteLine(getSteamID(source));
-            selectCharacterIDS(source);
+            SelectCharacterIDS(source);
 
             //use steamid to setup SQL select
 
 
         }
 
-
-
     }
-
 
 }
 

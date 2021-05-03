@@ -62,6 +62,8 @@ namespace CharacterInterface
         Inventory inv;
         Timer t1;
 
+        CharacterAtts[] cas = new CharacterAtts[5];
+
         string hunger_key = "_hunger_key";
         string thirst_key = "_thirst_key";
 
@@ -69,7 +71,10 @@ namespace CharacterInterface
 
         public CharacterInterface()
         {
-            
+            for (int i = 0; i < 5; i++)
+            {
+                cas[i] = new CharacterAtts();
+            }
             hunger = 0.75f;
             thirst = 0.75f;
 
@@ -78,17 +83,56 @@ namespace CharacterInterface
             playerped = Game.PlayerPed;
             EntityDecoration.RegisterProperty(hunger_key, DecorationType.Float);
             EntityDecoration.RegisterProperty(thirst_key, DecorationType.Float);
+            EventHandlers["onClientResourceStart"] += new Action<string>(OnClientResourceStart);
 
-            Tick += OnTick;
-            Tick += ItemUsage;
 
             //SetNuiFocus(false, false);
 
             RegisterNuiCallbackType("exit");
             EventHandlers["__cfx_nui:exit"] += new Action<IDictionary<string, object>, CallbackDelegate>(error);
+            EventHandlers["loginscr:setPlayerAtts"] += new Action<int, string, string, string, string, string, string, string, string, string, string, string, string>(setAtts);
+            //EventHandlers["loginscr:setCharacterAtts"] += new Action<string[][], int, int>(setCharAtts);
+            
 
+            Tick += OnTick;
+            Tick += ItemUsage;
+        }
+
+        private void OnClientResourceStart(string resourceName)
+        {
+            if (GetCurrentResourceName() != resourceName) return;
+
+            Debug.WriteLine("chinfo startup successful");
+        }
+
+        private void setCharAtts(string[][] arg2, int dim1, int dim2)
+        {
 
         }
+
+        private void setAtts(int number, string steamidchara, string steamid, string charaName, string isjailed, string canspawnboat, string canspawnplane, string moneybank, string moneyhand, string job, string ispolice, string canspawntow, string isEMC)
+        {
+
+            //Console.WriteLine("HHHHH");
+            cas[number].CharacterName = charaName;
+            cas[number].isjailed = Convert.ToBoolean(isjailed);
+            cas[number].canspawnboat = Convert.ToBoolean(canspawnboat);
+            cas[number].canspawnplane = Convert.ToBoolean(canspawnplane);
+            cas[number].canspawntow = Convert.ToBoolean(canspawntow);
+            cas[number].moneyHand = Convert.ToInt32(moneyhand);
+            cas[number].moneyBank = Convert.ToInt32(moneybank);
+            cas[number].job = job;
+            cas[number].ispolice = Convert.ToBoolean(ispolice);
+            cas[number].isEmc = Convert.ToBoolean(isEMC);
+
+            //Console.WriteLine($"something {cas[number].CharacterName}");
+            TriggerEvent("chat:addMessage", new
+            {
+                color = new[] { 255, 0, 0 },
+                args = new[] { "[TP]", $"{cas[number].CharacterName}" }
+            });
+        }
+
 
         private void error(IDictionary<string, object> arg1, CallbackDelegate arg2)
         {
@@ -104,13 +148,13 @@ namespace CharacterInterface
         private async Task ItemUsage()
         {
             inv.items[0] = ItemsData.SM_WATER;
-            Console.WriteLine(ItemsData.SM_WATER.ToString("g"));
-            if (!playerped.IsInVehicle() 
-                || (playerped.IsInVehicle() 
+            //Console.WriteLine(ItemsData.SM_WATER.ToString("g"));
+            if (!playerped.IsInVehicle()
+                || (playerped.IsInVehicle()
                 && playerped.CurrentVehicle.Driver != playerped))
-            if ( Game.IsControlJustReleased(0, Control.Talk))
-            {
-                    
+                if (Game.IsControlJustReleased(0, Control.Talk))
+                {
+
                     //open UI
 
                     string jsonstring;
@@ -118,12 +162,12 @@ namespace CharacterInterface
                     {
                         toggle = true
                     });
-                    //SendNuiMessage(jsonstring);
+                    SendNuiMessage(jsonstring);
 
                     int slotnumber = 0;
                     SetNuiFocus(true, true);
                     UseItem(inv.items[0], slotnumber);
-            }
+                }
         }
 
         private void UseItem(ItemsData itemnum, int slotnumber)
@@ -161,7 +205,7 @@ namespace CharacterInterface
                 inventoryinit = true;
             }
 
-            
+
 
             if (playerped.IsRunning)
             {
@@ -197,7 +241,7 @@ namespace CharacterInterface
             inv = new Inventory();
         }
 
-        private Ped setLook(Ped playerped )
+        private Ped setLook(Ped playerped)
         {/* some doc of the enum PedComponent
                  Face = 0,
         Head = 1,
@@ -226,13 +270,13 @@ namespace CharacterInterface
     Wristbands = 7,
     Unknown8 = 8,
     Unknown9 = 9"*/
-            
-            playerped.Style[PedComponents.Face].SetVariation(0,0);
+
+            playerped.Style[PedComponents.Face].SetVariation(0, 0);
             Debug.WriteLine(playerped.Style[PedComponents.Face].Count.ToString());
             Debug.WriteLine(playerped.Style[PedComponents.Face].Count.ToString());
             return playerped;
         }
 
-        
+
     }
 }
