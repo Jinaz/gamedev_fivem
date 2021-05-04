@@ -18,9 +18,89 @@ namespace loginscriptserver
         private string connStr = "server=localhost;user=client;database=fivem_server_db;port=3306;password=fivemClientDBPW";
         public loginscriptserver()
         {
+
+            EventHandlers["cbc:basicInfo"] += new Action<Player>(retrieveNameIDCash);
+
             EventHandlers["cbc:login"] += new Action<Player>(login);
             EventHandlers["cbc:getChars"] += new Action<Player>(getAllChars);
             EventHandlers["onResourceStart"] += new Action<string>(OnResourceStart);
+        }
+
+        private async void retrieveNameIDCash([FromSource]Player source)
+        {
+            //long charanum = await numOfCharas(obj);
+
+            string sqlstatement = $"select * from charactertable where steamID='{getSteamID(source)}';";
+            MySqlConnection conn = new MySqlConnection(connStr);
+            try
+            {
+
+                await conn.OpenAsync();
+
+                int charanum = Convert.ToInt32(await numOfCharas(source));
+
+                //SQL string
+                string sql = sqlstatement;
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+
+                //reader
+                DbDataReader rdr = (DbDataReader)await cmd.ExecuteReaderAsync();
+                //rdr.
+                source.TriggerEvent("loginscr:response", "start of reader");
+                int i = 0;
+                //source.TriggerEvent("loginscr:response", rdr.);
+
+                //init 2D array
+                string[][] Values = new string[charanum][];
+                for (int x = 0; x < charanum; x++)
+                {
+                    Values[x] = new string[12];
+                }
+
+                while (await rdr.ReadAsync())
+                {
+
+                    Values[i][0] = rdr["steamID_chara"].ToString();
+                    Values[i][1] = rdr["steamID"].ToString();
+                    Values[i][2] = rdr["CharaName"].ToString();
+                    Values[i][3] = rdr["isjailed"].ToString();
+                    Values[i][4] = rdr["canspawnboat"].ToString();
+                    Values[i][5] = rdr["canspawnplane"].ToString();
+                    Values[i][6] = rdr["moneybank"].ToString();
+                    Values[i][7] = rdr["moneyhand"].ToString();
+                    Values[i][8] = rdr["job"].ToString();
+                    Values[i][9] = rdr["ispolice"].ToString();
+                    Values[i][10] = rdr["canspawntow"].ToString();
+                    Values[i][11] = rdr["isEMC"].ToString();
+
+                    i++;
+                }
+
+                //peddict[i].Add();
+                rdr.Close();
+
+
+
+                if (charanum > 0)
+                {
+                    for (i = 0; i < charanum; i++)
+                        if (i == charanum - 1)
+                            source.TriggerEvent("loginscr:displayCharas", true, Values[i][2], Values[i][8], Values[i][6], Values[i][7], Values[i][0]);
+                        else
+                            source.TriggerEvent("loginscr:displayCharas", false, Values[i][2], Values[i][8], Values[i][6], Values[i][7], Values[i][0]);
+                }
+                else if (charanum == 0)
+                {
+                    source.TriggerEvent("loginscr:newPlayer");
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.StackTrace);
+            }
+
         }
 
         public void OnResourceStart(string resourceName)
@@ -33,15 +113,7 @@ namespace loginscriptserver
 
         }
 
-        private async void getAllChars([FromSource]Player source)
-        {
-            string steamid = getSteamID(source);
-            //List<string> playerpedsids = await SelectCharacterIDS(source);
-            //source.TriggerEvent("loginscr:setPlayerAtts", );
-
-            await SelectCharacterIDS(source);
-        }
-
+        //utils
         private async Task displayNumberOfPlayer()
         {
 
@@ -67,7 +139,7 @@ namespace loginscriptserver
             conn.Close();
 
         }
-
+        //utils
         private async Task<long> numOfCharas(Player source)
         {
 
@@ -96,7 +168,17 @@ namespace loginscriptserver
 
         }
 
+        private async void getAllChars([FromSource]Player source)
+        {
+            string steamid = getSteamID(source);
+            //List<string> playerpedsids = await SelectCharacterIDS(source);
+            //source.TriggerEvent("loginscr:setPlayerAtts", );
 
+            await SelectCharacterIDS(source);
+        }
+
+        
+        //utils
         public static string getBetween(string strSource, string searchString)
         {
             if (strSource.Contains(searchString))
@@ -207,13 +289,13 @@ namespace loginscriptserver
                 //peddict[i].Add();
                 rdr.Close();
                 
-                for(i= 0; i < charanum; i++)
-                {
-                    for (int s1=0; s1 < 12; s1++)
-                    {
-                        source.TriggerEvent("loginscr:response", Values[i][s1]);
-                    }
-                }
+                //for(i= 0; i < charanum; i++)
+                //{
+                    //for (int s1=0; s1 < 12; s1++)
+                    //{
+                        //source.TriggerEvent("loginscr:response", Values[i][s1]);
+                    //}
+                //}
 
                 
                 for (i= 0; i < charanum; i++)
@@ -272,6 +354,7 @@ namespace loginscriptserver
 
         }
 
+        //templates
         private async Task execSQL(Player source)
         {
             Console.WriteLine("execSQL");

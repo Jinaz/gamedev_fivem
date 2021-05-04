@@ -10,26 +10,83 @@ using static CitizenFX.Core.Native.API;
 
 using CitizenFX.Core.UI;
 using System.Drawing;
-
+using Newtonsoft.Json;
 
 namespace loginscript
 {
+    class UIcard
+    {
+        public string steamCharID;
+        public string name;
+        public string job;
+        public int moneyhand;
+        public int moneybank;
+
+        public UIcard(string nameU, string jobU, int moneyhandU, int moneybankU, string steamCharIDU)
+        {
+            name = nameU;
+            job = jobU;
+            moneyhand = moneyhandU;
+            moneybank = moneybankU;
+            steamCharID = steamCharIDU;
+        }
+
+    }
+
     public class loginscript : BaseScript
     {
 
         Ped playerped;
         bool initialized = false;
+        List<UIcard> cards = new List<UIcard>();
         public loginscript()
         {
+            EventHandlers["loginscr:newPlayer"] += new Action(newPlayer);
             EventHandlers["onClientResourceStart"] += new Action<string>(OnResourceStart);
             EventHandlers["loginscr:response"] += new Action<string>(responsePrint);
             EventHandlers["loginscr:respondPeds"] += new Action<Dictionary<string, string>[]>(respPeds);
-            
 
+            EventHandlers["loginscr:displayCharas"] += new Action<bool, string, string, string, string, string>(createUI);
             //SetNuiFocus(true,true);
         }
 
-        
+        private void newPlayer()
+        {
+            string jsonstring = "{\"cardscount\":" + 0 + "}";
+            Debug.WriteLine(jsonstring);
+            //SendNuiMessage(jsonstring);
+            Debug.WriteLine(jsonstring);
+            //SetNuiFocus(true, true);
+        }
+
+        private void createUI(bool arg1, string arg2, string arg3, string arg4, string arg5, string steamCharID)
+        {
+            if (arg1)
+            {
+                cards.Add(new UIcard(arg2, arg3, Convert.ToInt32(arg4), Convert.ToInt32(arg4), steamCharID));
+                string jsonstring = "{";
+                int ucnumber = 0;
+                if (cards.Any())
+                {
+                    jsonstring += "\"name" + 0 + "\": \"" + cards[0].name + "\", \"job" + 0 + "\":\"" + cards[0].job + "\", \"moneyhand" + 0 + "\":" + cards[0].moneyhand + ",\"moneybank" + 0 + "\":" + cards[0].moneyhand + ",\"charid"+0+"\":\""+cards[0].steamCharID+"\"";
+                    for (ucnumber= 1; ucnumber < cards.Count; ucnumber++)
+                    {
+                        jsonstring += ",\"name" + ucnumber + "\": \"" + cards[ucnumber].name + "\", \"job" + ucnumber + "\":\"" + cards[ucnumber].job + "\", \"moneyhand" + ucnumber + "\":" + cards[ucnumber].moneyhand + ",\"moneybank" + ucnumber + "\":" + cards[ucnumber].moneyhand + ",\"charid" + ucnumber + "\":\"" + cards[ucnumber].steamCharID + "\"";
+                    }
+                }
+
+                
+                jsonstring += ",\"cardscount\":"+ucnumber+"}";
+                
+                //SendNuiMessage(jsonstring);
+                Debug.WriteLine(jsonstring);
+                //SetNuiFocus(true, true);
+            }
+            else
+            {
+                cards.Add(new UIcard(arg2, arg3, Convert.ToInt32(arg4), Convert.ToInt32(arg4) , steamCharID));
+            }
+        }
 
         private void respPeds(Dictionary<string, string>[] arg2)
         {
@@ -133,20 +190,15 @@ namespace loginscript
 
                         }
                     }
-
                 }
-
-
-
-
             }
             ), false);
 
             RegisterCommand("triggerlogin", new Action<int, List<object>, string>(async (source, args, raw) =>
             {
                 Console.WriteLine("login triggered");
-                TriggerServerEvent("cbc:getChars");
-            }),false);
+                TriggerServerEvent("cbc:basicInfo");
+            }), false);
         }
     }
 }
