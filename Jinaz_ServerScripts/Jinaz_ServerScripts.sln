@@ -27,6 +27,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "loginscript", "loginscript\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "loginscriptserver", "loginscriptserver\loginscriptserver.csproj", "{D54A2A73-48DB-415E-8CDE-7A6FACBA398E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "characterUI", "characterUI\characterUI.csproj", "{8F6BFAD4-9DF8-48B7-A967-BDF2B03B15CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClothesShop", "ClothesShop\ClothesShop.csproj", "{92ACE06C-D646-4C68-A6D9-ECAB604BB68D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +85,14 @@ Global
 		{D54A2A73-48DB-415E-8CDE-7A6FACBA398E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D54A2A73-48DB-415E-8CDE-7A6FACBA398E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D54A2A73-48DB-415E-8CDE-7A6FACBA398E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F6BFAD4-9DF8-48B7-A967-BDF2B03B15CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F6BFAD4-9DF8-48B7-A967-BDF2B03B15CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F6BFAD4-9DF8-48B7-A967-BDF2B03B15CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F6BFAD4-9DF8-48B7-A967-BDF2B03B15CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92ACE06C-D646-4C68-A6D9-ECAB604BB68D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92ACE06C-D646-4C68-A6D9-ECAB604BB68D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92ACE06C-D646-4C68-A6D9-ECAB604BB68D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92ACE06C-D646-4C68-A6D9-ECAB604BB68D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

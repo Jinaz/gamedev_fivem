@@ -4,7 +4,7 @@ using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CharacterInterface;
+
 using CitizenFX.Core;
 using MySql.Data.MySqlClient;
 using static CitizenFX.Core.Native.API;

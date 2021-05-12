@@ -42,12 +42,13 @@ namespace loginscript
         public loginscript()
         {
             EventHandlers["loginscr:newPlayer"] += new Action(newPlayer);
-            EventHandlers["onClientResourceStart"] += new Action<string>(OnResourceStart);
+            EventHandlers["onClientResourceStart"] += new Action<string>(OnResourceStartAsync);
             EventHandlers["loginscr:response"] += new Action<string>(responsePrint);
             EventHandlers["loginscr:respondPeds"] += new Action<Dictionary<string, string>[]>(respPeds);
 
             EventHandlers["loginscr:displayCharas"] += new Action<bool, string, string, string, string, string>(createUI);
             //SetNuiFocus(true,true);
+            
         }
 
         private void newPlayer()
@@ -57,6 +58,7 @@ namespace loginscript
             //SendNuiMessage(jsonstring);
             Debug.WriteLine(jsonstring);
             //SetNuiFocus(true, true);
+            TriggerEvent("loginscr:createChar");
         }
 
         private void createUI(bool arg1, string arg2, string arg3, string arg4, string arg5, string steamCharID)
@@ -68,23 +70,23 @@ namespace loginscript
                 int ucnumber = 0;
                 if (cards.Any())
                 {
-                    jsonstring += "\"name" + 0 + "\": \"" + cards[0].name + "\", \"job" + 0 + "\":\"" + cards[0].job + "\", \"moneyhand" + 0 + "\":" + cards[0].moneyhand + ",\"moneybank" + 0 + "\":" + cards[0].moneyhand + ",\"charid"+0+"\":\""+cards[0].steamCharID+"\"";
-                    for (ucnumber= 1; ucnumber < cards.Count; ucnumber++)
+                    jsonstring += "\"name" + 0 + "\": \"" + cards[0].name + "\", \"job" + 0 + "\":\"" + cards[0].job + "\", \"moneyhand" + 0 + "\":" + cards[0].moneyhand + ",\"moneybank" + 0 + "\":" + cards[0].moneyhand + ",\"charid" + 0 + "\":\"" + cards[0].steamCharID + "\"";
+                    for (ucnumber = 1; ucnumber < cards.Count; ucnumber++)
                     {
                         jsonstring += ",\"name" + ucnumber + "\": \"" + cards[ucnumber].name + "\", \"job" + ucnumber + "\":\"" + cards[ucnumber].job + "\", \"moneyhand" + ucnumber + "\":" + cards[ucnumber].moneyhand + ",\"moneybank" + ucnumber + "\":" + cards[ucnumber].moneyhand + ",\"charid" + ucnumber + "\":\"" + cards[ucnumber].steamCharID + "\"";
                     }
                 }
 
-                
-                jsonstring += ",\"cardscount\":"+ucnumber+"}";
-                
+
+                jsonstring += ",\"cardscount\":" + ucnumber + "}";
+
                 //SendNuiMessage(jsonstring);
                 Debug.WriteLine(jsonstring);
                 //SetNuiFocus(true, true);
             }
             else
             {
-                cards.Add(new UIcard(arg2, arg3, Convert.ToInt32(arg4), Convert.ToInt32(arg4) , steamCharID));
+                cards.Add(new UIcard(arg2, arg3, Convert.ToInt32(arg4), Convert.ToInt32(arg4), steamCharID));
             }
         }
 
@@ -99,7 +101,24 @@ namespace loginscript
             Debug.WriteLine(obj);
         }
 
-        private void OnResourceStart(string resourceName)
+        private async Task defaultModel()
+        {
+            var model = new Model(PedHash.FreemodeMale01);
+            bool x = await Game.Player.ChangeModel(model);
+            //playerped.Style.SetDefaultClothes();
+            Debug.WriteLine(x.ToString());
+            foreach (PedComponents pc in (PedComponents[])Enum.GetValues(typeof(PedComponents)))
+            {
+                Game.PlayerPed.Style[pc].SetVariation(0);
+            }
+            foreach (PedProps pc in (PedProps[])Enum.GetValues(typeof(PedProps)))
+            {
+                Game.PlayerPed.Style[pc].SetVariation(0);
+            }
+
+        }
+
+        private void OnResourceStartAsync(string resourceName)
         {
             if (GetCurrentResourceName() != resourceName) return;
 
@@ -111,6 +130,11 @@ namespace loginscript
                 TriggerServerEvent("cbc:login");
 
                 Debug.WriteLine("server event triggered");
+
+                //set model to be changable
+                defaultModel();
+
+
                 //TODO connect SQL on start
                 //get player data
 
@@ -198,6 +222,17 @@ namespace loginscript
             {
                 Console.WriteLine("login triggered");
                 TriggerServerEvent("cbc:basicInfo");
+            }), false);
+
+            RegisterCommand("setClothes", new Action<int, List<object>, string>(async (source, args, raw) =>
+            {
+
+                TriggerEvent("clths:changeClths");
+
+                //playerped.Style[PedComponents.Hair].Index = Convert.ToInt32(args[0]);
+                //bool valid = playerped.Style[PedComponents.Hair].IsVariationValid(Convert.ToInt32(args[0]), Convert.ToInt32(args[1]));
+                //Debug.WriteLine(valid.ToString());
+                //if (valid) playerped.Style[PedComponents.Hair].SetVariation(Convert.ToInt32(args[0]), Convert.ToInt32(args[1]));
             }), false);
         }
     }
