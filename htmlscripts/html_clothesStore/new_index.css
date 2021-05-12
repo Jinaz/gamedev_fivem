@@ -4,7 +4,15 @@ body {font-family: Arial;}
 .tab {
   overflow: hidden;
   border: 1px solid #ccc;
-  background-color: #f1f1f1;
+  background-color: #002677;
+}
+
+textarea {
+  width: 51px;
+  height: 34px;
+  font-size: large;
+  transition: 0.3s;
+  font-size: 17px;
 }
 
 table {
@@ -19,11 +27,60 @@ table {
 td, th {
   border: 1px solid transparent;
   padding: 1px;
-  text-align: center;
+  text-align: top;
+  vertical-align: top;
+  
 }
 
+
 tr:nth-child(even) {
-  background-color: #dddddd;
+  background-color: #aefff8;
+  
+}
+
+.bottomrow{
+  position: fixed;
+  top: 95%;
+  left: 5%;
+  width: 90%;
+}
+
+.bottombtnn {
+  background-color: #ff2020;
+  border: none;
+  color: white;
+  width: 40%;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.bottombtnn:hover{
+  background-color: #9c0000;
+}
+
+.btnn {
+  height: 34px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+#container2 {
+  font-size: 20px;
+  padding: 5px;
+  color: rgb(255, 155, 155);
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(149, 225, 255);
+  height: 10%;
+  width: 25%;
+  border: 2px solid rgb(255, 178, 194);
+  border-radius: 7px;
+  opacity:1; /* allgemein */
 }
 
 #container {
@@ -32,14 +89,14 @@ tr:nth-child(even) {
   color: rgb(255, 155, 155);
   position: fixed;
   top: 50%;
-  left: 70%;
+  left: 82%;
   transform: translate(-50%, -50%);
   background-color: rgb(149, 225, 255);
   height: 90%;
-  width: 40%;
+  width: 30%;
   border: 2px solid rgb(255, 178, 194);
   border-radius: 7px;
-  opacity:1.0; /* allgemein */
+  opacity:1; /* allgemein */
 }
 
 /* Style the buttons inside the tab */
@@ -52,8 +109,8 @@ tr:nth-child(even) {
   padding: 14px 16px;
   transition: 0.3s;
   font-size: 17px;
-  color: rgb(0, 0, 0);
-  background-color: rgb(132, 197, 223);
+  color: rgb(255, 255, 255);
+  background-color: rgb(37, 0, 172);
 }
 
 /* Change background color of buttons on hover */
@@ -70,10 +127,10 @@ tr:nth-child(even) {
 .tabcontent {
   display: none;
   
-  
+  height: 80%;
   border-top: none;
   margin: auto;
-  width: 100%;
-  
+  width: 95%;
+  overflow: auto;
   align-items:center;
 }
