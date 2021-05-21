@@ -20,7 +20,7 @@ namespace CharacterInterfaceServer
             EventHandlers["onResourceStart"] += new Action<string>(OnResourceStart);
             EventHandlers["cbc:LoadCharacters"] += new Action<Player, string>(loadCharacters);
             EventHandlers["cbc:LoadLook"] += new Action<Player, string>(loadLook);
-            EventHandlers["cbc:SaveLook"] += new Action<Player, string>(saveLook);
+            EventHandlers["cbc:AAAA"] += new Action<Player, string>(saveLook);
 
         }
 

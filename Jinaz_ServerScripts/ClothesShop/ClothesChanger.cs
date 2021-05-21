@@ -60,8 +60,8 @@ namespace ClothesShop
             SetNuiFocus(false, false);
             lockVCamera = false;
             lockHCamera = false;
+            playername = arg1["name"].ToString();
 
-            
             Ped ped = Game.PlayerPed;
             ClothesClass cc = new ClothesClass(head: ped.Style[PedComponents.Face].Index,
              masks: ped.Style[PedComponents.Head].Index,
@@ -121,11 +121,12 @@ namespace ClothesShop
             var jss = JsonConvert.SerializeObject(cc);
             Debug.WriteLine(jss);
             //send to SQLDB
-            TriggerServerEvent("cbc:SaveLook", jss);
+            TriggerServerEvent("cbc:SaveLook", jss, playername,cgender);
             //trigger TP script
         }
 
         int cgender = 0;
+        string playername = "";
 
         private async void charChange(IDictionary<string, object> arg1, CallbackDelegate arg2)
         {

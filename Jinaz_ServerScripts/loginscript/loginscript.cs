@@ -84,6 +84,7 @@ namespace loginscript
             if (arg1)
             {
                 cards.Add(new UIcard(arg2, arg3, Convert.ToInt32(arg4), Convert.ToInt32(arg4), steamCharID));
+
                 string jsonstring = "{";
                 int ucnumber = 0;
                 if (cards.Any())
@@ -94,7 +95,7 @@ namespace loginscript
                         jsonstring += ",\"name" + ucnumber + "\": \"" + cards[ucnumber].name + "\", \"job" + ucnumber + "\":\"" + cards[ucnumber].job + "\", \"moneyhand" + ucnumber + "\":" + cards[ucnumber].moneyhand + ",\"moneybank" + ucnumber + "\":" + cards[ucnumber].moneyhand + ",\"charid" + ucnumber + "\":\"" + cards[ucnumber].steamCharID + "\"";
                     }
                 }
-
+                
 
                 jsonstring += ",\"cardscount\":" + ucnumber + "}";
 
