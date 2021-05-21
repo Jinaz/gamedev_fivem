@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 using CitizenFX.Core;
 using MySql.Data.MySqlClient;
+using Newtonsoft.Json;
 using static CitizenFX.Core.Native.API;
 
 
@@ -23,7 +24,14 @@ namespace loginscriptserver
 
             EventHandlers["cbc:login"] += new Action<Player>(login);
             EventHandlers["cbc:getChars"] += new Action<Player>(getAllChars);
+            EventHandlers["cbc:SaveLook"] += new Action<Player, string>(saveFirstChar);
             EventHandlers["onResourceStart"] += new Action<string>(OnResourceStart);
+        }
+
+        private void saveFirstChar(Player arg1, string arg2)
+        {
+            ClothesShop.ClothesClass cc = JsonConvert.DeserializeObject<ClothesShop.ClothesClass>(arg2);
+            //19.05 do insert function into SQL
         }
 
         private async void retrieveNameIDCash([FromSource]Player source)

@@ -48,7 +48,25 @@ namespace loginscript
 
             EventHandlers["loginscr:displayCharas"] += new Action<bool, string, string, string, string, string>(createUI);
             //SetNuiFocus(true,true);
-            
+
+            RegisterNuiCallbackType("createChar");
+            EventHandlers["__cfx_nui:createChar"] += new Action<IDictionary<string, object>, CallbackDelegate>(createTriggered);
+
+            RegisterNuiCallbackType("selectChar");
+            EventHandlers["__cfx_nui:selectChar"] += new Action<IDictionary<string, object>, CallbackDelegate>(selectChar);
+
+
+        }
+
+        private void selectChar(IDictionary<string, object> arg1, CallbackDelegate arg2)
+        {
+            throw new NotImplementedException();
+            //Trigger tp script after setting chara
+        }
+
+        private void createTriggered(IDictionary<string, object> arg1, CallbackDelegate arg2)
+        {
+            TriggerEvent("clths:changeClths");
         }
 
         private void newPlayer()
@@ -58,7 +76,7 @@ namespace loginscript
             //SendNuiMessage(jsonstring);
             Debug.WriteLine(jsonstring);
             //SetNuiFocus(true, true);
-            TriggerEvent("loginscr:createChar");
+            TriggerEvent("clths:changeClths");
         }
 
         private void createUI(bool arg1, string arg2, string arg3, string arg4, string arg5, string steamCharID)
@@ -131,8 +149,7 @@ namespace loginscript
 
                 Debug.WriteLine("server event triggered");
 
-                //set model to be changable
-                defaultModel();
+                
 
 
                 //TODO connect SQL on start
@@ -226,7 +243,7 @@ namespace loginscript
 
             RegisterCommand("setClothes", new Action<int, List<object>, string>(async (source, args, raw) =>
             {
-
+                defaultModel();
                 TriggerEvent("clths:changeClths");
 
                 //playerped.Style[PedComponents.Hair].Index = Convert.ToInt32(args[0]);
@@ -234,6 +251,106 @@ namespace loginscript
                 //Debug.WriteLine(valid.ToString());
                 //if (valid) playerped.Style[PedComponents.Hair].SetVariation(Convert.ToInt32(args[0]), Convert.ToInt32(args[1]));
             }), false);
+
+            RegisterCommand("checkFunctions", new Action<int, List<object>, string>(async (source, args, raw) =>
+            {
+                //defaultModel();
+                foreach (string s in args)
+                {
+                    Debug.WriteLine(s);
+                }
+                int pedid = Game.PlayerPed.Handle;
+                //SetPedComponentVariation();
+                int overlayid = Convert.ToInt32(args[0]);
+                int maxoverlay = GetNumHeadOverlayValues(overlayid)-1;
+                int index = Convert.ToInt32(args[1]);
+                float opacity = float.Parse(args[2].ToString());
+                SetPedHeadOverlay(pedid, overlayid, index, opacity);
+                //SetPedHairColor();
+                //SetPedEyeColor();
+
+            }),false);
+
+            RegisterCommand("checkFunctions2", new Action<int, List<object>, string>(async (source, args, raw) =>
+            {
+                //defaultModel();
+                foreach (string s in args)
+                {
+                    Debug.WriteLine(s);
+                }
+                int pedid = Game.PlayerPed.Handle;
+                int overlayid = Convert.ToInt32(args[0]);
+                //SetPedHairColor();
+                //SetPedEyeColor();
+                int colorType = Convert.ToInt32(args[1]);
+                int colorid = Convert.ToInt32(args[2]);
+                int secondcolorid = Convert.ToInt32(args[3]);
+                SetPedHeadOverlayColor(pedid, overlayid, colorType, colorid, secondcolorid);
+                //SetPedHeadBlendData();
+            }), false);
+
+            RegisterCommand("checkFunctions3", new Action<int, List<object>, string>(async (source, args, raw) =>
+            {
+                //defaultModel();
+                foreach (string s in args)
+                {
+                    Debug.WriteLine(s);
+                }
+                int pedid = Game.PlayerPed.Handle;
+                int componentid = Convert.ToInt32(args[0]);
+                //SetPedHairColor();
+                //SetPedEyeColor();
+                int drawableid = Convert.ToInt32(args[1]);
+                int textureid = Convert.ToInt32(args[2]);
+                int paletteid = Convert.ToInt32(args[3]);
+                //Game.PlayerPed.Style[PedComponents.Hair].SetVariation(drawableid, textureid);
+                Debug.WriteLine("Variations:"+Game.PlayerPed.Style[PedComponents.Torso].TextureCount.ToString());
+                Debug.WriteLine("Variations:" + Game.PlayerPed.Style[PedComponents.Torso].Count.ToString());
+                SetPedComponentVariation(Game.PlayerPed.Handle, componentid, drawableid, textureid, paletteid);
+                //SetPedHeadBlendData();
+            }), false);
+
+            RegisterCommand("checkFunctions4", new Action<int, List<object>, string>(async (source, args, raw) =>
+            {
+                //defaultModel();
+                
+                foreach (string s in args)
+                {
+                    Debug.WriteLine(s);
+                }
+                int pedid = Game.PlayerPed.Handle;
+                int faceShape = Convert.ToInt32(args[0]);
+                int skincolor = Convert.ToInt32(args[1]);
+                Debug.WriteLine("Count:" + Game.PlayerPed.Style[PedComponents.Face].Count.ToString());
+                Debug.WriteLine("TextureCount:" + Game.PlayerPed.Style[PedComponents.Face].TextureCount.ToString());
+                //SetPedHeadOverlayColor(pedid, overlayid, colorType, colorid, secondcolorid);
+                SetPedHeadBlendData(pedid, 0,0,faceShape,0,0,skincolor,0.0f,0.0f,1.0f,false);
+            }), false);
+            RegisterCommand("checkFunctions5", new Action<int, List<object>, string>(async (source, args, raw) =>
+            {
+                //defaultModel();
+
+                foreach (string s in args)
+                {
+                    Debug.WriteLine(s);
+                }
+                int pedid = Game.PlayerPed.Handle;
+                int primcolor = Convert.ToInt32(args[0]);
+                int secondcolor = Convert.ToInt32(args[1]);
+                //SetPedHeadOverlayColor(pedid, overlayid, colorType, colorid, secondcolorid);
+                SetPedHairColor(pedid, primcolor, secondcolor);
+                SetPedEyeColor(pedid, primcolor);
+            }), false);
+
+
+            RegisterCommand("dm", new Action<int, List<object>, string>(async (source, args, raw) =>
+            {
+                //set model to be changable
+                defaultModel();
+               
+                }), false);
+
+            ;
         }
     }
 }

@@ -29,8 +29,6 @@ namespace ConsoleCommandsServer
 
         private void checkPermission([FromSource] Player source, string param1)
         {
-            
-            
             source.TriggerEvent("chat:addMessage", $"[Server] {param1.ToString()} triggered an event");
             source.TriggerEvent("client:sendback", param1.ToString());
 

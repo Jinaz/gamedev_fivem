@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CharacterAtts.cs" />
+    <Compile Include="ClothesClass.cs" />
     <Compile Include="loginscriptserver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
