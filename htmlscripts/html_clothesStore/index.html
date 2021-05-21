@@ -1,553 +1,942 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="reset.css" type="text/css">
-  <link rel="stylesheet" href="new_index.css" type="text/css">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="reset.css" type="text/css">
+    <link rel="stylesheet" href="new_index.css" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
-  <div id="container2">
-    <div><label>asdf price</label></div>
-    <div><button class="btnn">Accept</button> &nbsp; &nbsp;<button class="btnn">Cancel</button></div>
+    <div id="container2">
+        <div><label id="pricetag">asdf price</label></div>
+        <div>&nbsp;</div>
+        <div><button id="pay" class="btnn">Accept</button> &nbsp; &nbsp;<button id="cancelbuy"
+                class="btnn">Cancel</button></div>
 
 
-  </div>
-
-  <div id="container2">
-    <div><label>asdf price</label></div>
-    <div><button class="btnn">Accept</button> &nbsp; &nbsp;<button class="btnn">Cancel</button></div>
-
-
-  </div>
-
-  <div id="container">
-    <div class="tab">
-      <button id="Clothes" class="tablinks">Clothes</button>
-      <!--<button class="tablinks">Clothes</button>-->
-      <button id="Specials" class="tablinks">Specials</button>
-      <button id="viewFace" class="tablinks">FaceView</button>
-      <button id="viewBody" class="tablinks">BodyView</button>
-      <button id="FaceCreation" class="tablinks">Face</button>
-      <button id="etc" class="tablinks">ETC</button>
     </div>
 
-    <div id="ClothesTAB" class="tabcontent">
-      <div>
-        <ul>
-          <li>
-            <table>
-              <tr>
-                <td>head</td>
-                <td>
-                  <button class="btnn" id="head_left" type="button">
-                    &lt;
-                  </button>
-                </td>
-                <td>
-                  <input id="headid" type="number" min="0" step="1" value="0" />
-                  </input>
-
-                </td>
-                <td>
-
-                  <button class="btnn" id="head_right" type="button">
-                    &gt;
-                  </button>
-                </td>
-
-                <td>&nbsp;&nbsp;&nbsp;</td>
-                <td>head Variation</td>
-                <td>
-                  <button class="btnn" id="headvariation_left" type="button">
-                    &lt;
-                  </button>
-                </td>
-                <td>
-                  <input id="headvariationid" type="number" min="0" step="1" value="0" />
-                  </input>
-                </td>
-                <td>
-
-                  <button class="btnn" id="headvariation_right" type="button">
-                    &gt;
-                  </button>
-                </td>
-
-              </tr>
-
-              <tr>
-                <td>masks</td>
-                <td>
-                  <button class="btnn" id="masks_left" type="button">
-                    &lt;
-                  </button>
-                </td>
-                <td>
-                  <input id="masksid" type="number" min="0" step="1" value="0" />
-                  </input>
-
-                </td>
-                <td>
-
-                  <button class="btnn" id="masks_right" type="button">
-                    &gt;
-                  </button>
-                </td>
-
-                <td>&nbsp;&nbsp;&nbsp;</td>
-                <td>masks Variation</td>
-                <td>
-                  <button class="btnn" id="masksvariation_left" type="button">
-                    &lt;
-                  </button>
-                </td>
-                <td>
-                  <input id="masksvariationid" type="number" min="0" step="1" value="0" />
-                  </input>
-                </td>
-                <td>
-
-                  <button class="btnn" id="masksvariation_right" type="button">
-                    &gt;
-                  </button>
-                </td>
-
-              </tr>
-
-              <tr>
-                <td>hair</td>
-                <td>
-                  <button class="btnn" id="hair_left" type="button">
-                    &lt;
-                  </button>
-                </td>
-                <td>
-                  <input id="hairid" type="number" min="0" step="1" value="0" />
-                  </input>
-
-                </td>
-                <td>
-
-                  <button class="btnn" id="hair_right" type="button">
-                    &gt;
-                  </button>
-                </td>
-
-                <td>&nbsp;&nbsp;&nbsp;</td>
-                <td>hair Variation</td>
-                <td>
-                  <button class="btnn" id="hairvariation_left" type="button">
-                    &lt;
-                  </button>
-                </td>
-                <td>
-                  <input id="hairvariationid" type="number" min="0" step="1" value="0" />
-                  </input>
-                </td>
-                <td>
-
-                  <button class="btnn" id="hairvariation_right" type="button">
-                    &gt;
-                  </button>
-                </td>
-
-              </tr>
-
-              <tr>
-                <td>torso</td>
-                <td>
-                  <button class="btnn" id="torso_left" type="button">
-                    &lt;
-                  </button>
-                </td>
-                <td>
-                  <input id="torsoid" type="number" min="0" step="1" value="0" />
-                  </input>
-
-                </td>
-                <td>
-
-                  <button class="btnn" id="torso_right" type="button">
-                    &gt;
-                  </button>
-                </td>
-
-                <td>&nbsp;&nbsp;&nbsp;</td>
-                <td>torso Variation</td>
-                <td>
-                  <button class="btnn" id="torsovariation_left" type="button">
-                    &lt;
-                  </button>
-                </td>
-                <td>
-                  <input id="torsovariationid" type="number" min="0" step="1" value="0" />
-                  </input>
-                </td>
-                <td>
-
-                  <button class="btnn" id="torsovariation_right" type="button">
-                    &gt;
-                  </button>
-                </td>
-
-              </tr>
-
-              <tr>
-                <td>legs</td>
-                <td>
-                  <button class="btnn" id="legs_left" type="button">
-                    &lt;
-                  </button>
-                </td>
-                <td>
-                  <input id="legsid" type="number" min="0" step="1" value="0" />
-                  </input>
-
-                </td>
-                <td>
-
-                  <button class="btnn" id="legs_right" type="button">
-                    &gt;
-                  </button>
-                </td>
-
-                <td>&nbsp;&nbsp;&nbsp;</td>
-                <td>legs Variation</td>
-                <td>
-                  <button class="btnn" id="legsvariation_left" type="button">
-                    &lt;
-                  </button>
-                </td>
-                <td>
-                  <input id="legsvariationid" type="number" min="0" step="1" value="0" />
-                  </input>
-                </td>
-                <td>
-
-                  <button class="btnn" id="legsvariation_right" type="button">
-                    &gt;
-                  </button>
-                </td>
-
-              </tr>
-
-              <tr>
-                <td>bags</td>
-                <td>
-                  <button class="btnn" id="bags_left" type="button">
-                    &lt;
-                  </button>
-                </td>
-                <td>
-                  <input id="bagsid" type="number" min="0" step="1" value="0" />
-                  </input>
-
-                </td>
-                <td>
-
-                  <button class="btnn" id="bags_right" type="button">
-                    &gt;
-                  </button>
-                </td>
-
-                <td>&nbsp;&nbsp;&nbsp;</td>
-                <td>bags Variation</td>
-                <td>
-                  <button class="btnn" id="bagsvariation_left" type="button">
-                    &lt;
-                  </button>
-                </td>
-                <td>
-                  <input id="bagsvariationid" type="number" min="0" step="1" value="0" />
-                  </input>
-                </td>
-                <td>
-
-                  <button class="btnn" id="bagsvariation_right" type="button">
-                    &gt;
-                  </button>
-                </td>
-
-              </tr>
-
-              <tr>
-                <td>shoes</td>
-                <td>
-                  <button class="btnn" id="shoes_left" type="button">
-                    &lt;
-                  </button>
-                </td>
-                <td>
-                  <input id="shoesid" type="number" min="0" step="1" value="0" />
-                  </input>
-
-                </td>
-                <td>
-
-                  <button class="btnn" id="shoes_right" type="button">
-                    &gt;
-                  </button>
-                </td>
-
-                <td>&nbsp;&nbsp;&nbsp;</td>
-                <td>shoes Variation</td>
-                <td>
-                  <button class="btnn" id="shoesvariation_left" type="button">
-                    &lt;
-                  </button>
-                </td>
-                <td>
-                  <input id="shoesvariationid" type="number" min="0" step="1" value="0" />
-                  </input>
-                </td>
-                <td>
-
-                  <button class="btnn" id="shoesvariation_right" type="button">
-                    &gt;
-                  </button>
-                </td>
-
-              </tr>
-
-              <tr>
-                <td>accessories</td>
-                <td>
-                  <button class="btnn" id="accessories_left" type="button">
-                    &lt;
-                  </button>
-                </td>
-                <td>
-                  <input id="accessoriesid" type="number" min="0" step="1" value="0" />
-                  </input>
-
-                </td>
-                <td>
-
-                  <button class="btnn" id="accessories_right" type="button">
-                    &gt;
-                  </button>
-                </td>
-
-                <td>&nbsp;&nbsp;&nbsp;</td>
-                <td>accessories Variation</td>
-                <td>
-                  <button class="btnn" id="accessoriesvariation_left" type="button">
-                    &lt;
-                  </button>
-                </td>
-                <td>
-                  <input id="accessoriesvariationid" type="number" min="0" step="1" value="0" />
-                  </input>
-                </td>
-                <td>
-
-                  <button class="btnn" id="accessoriesvariation_right" type="button">
-                    &gt;
-                  </button>
-                </td>
-
-              </tr>
-
-              <tr>
-                <td>undershirts</td>
-                <td>
-                  <button class="btnn" id="undershirts_left" type="button">
-                    &lt;
-                  </button>
-                </td>
-                <td>
-                  <input id="undershirtsid" type="number" min="0" step="1" value="0" />
-                  </input>
-
-                </td>
-                <td>
-
-                  <button class="btnn" id="undershirts_right" type="button">
-                    &gt;
-                  </button>
-                </td>
-
-                <td>&nbsp;&nbsp;&nbsp;</td>
-                <td>undershirts Variation</td>
-                <td>
-                  <button class="btnn" id="undershirtsvariation_left" type="button">
-                    &lt;
-                  </button>
-                </td>
-                <td>
-                  <input id="undershirtsvariationid" type="number" min="0" step="1" value="0" />
-                  </input>
-                </td>
-                <td>
-
-                  <button class="btnn" id="undershirtsvariation_right" type="button">
-                    &gt;
-                  </button>
-                </td>
-
-              </tr>
-
-              <tr>
-                <td>bodyArmor</td>
-                <td>
-                  <button class="btnn" id="bodyArmor_left" type="button">
-                    &lt;
-                  </button>
-                </td>
-                <td>
-                  <input id="bodyArmorid" type="number" min="0" step="1" value="0" />
-                  </input>
-
-                </td>
-                <td>
-
-                  <button class="btnn" id="bodyArmor_right" type="button">
-                    &gt;
-                  </button>
-                </td>
-
-                <td>&nbsp;&nbsp;&nbsp;</td>
-                <td>bodyArmor Variation</td>
-                <td>
-                  <button class="btnn" id="bodyArmorvariation_left" type="button">
-                    &lt;
-                  </button>
-                </td>
-                <td>
-                  <input id="bodyArmorvariationid" type="number" min="0" step="1" value="0" />
-                  </input>
-                </td>
-                <td>
-
-                  <button class="btnn" id="bodyArmorvariation_right" type="button">
-                    &gt;
-                  </button>
-                </td>
-
-              </tr>
-
-              <tr>
-                <td>decals</td>
-                <td>
-                  <button class="btnn" id="decals_left" type="button">
-                    &lt;
-                  </button>
-                </td>
-                <td>
-                  <input id="decalsid" type="number" min="0" step="1" value="0" />
-                  </input>
-
-                </td>
-                <td>
-
-                  <button class="btnn" id="decals_right" type="button">
-                    &gt;
-                  </button>
-                </td>
-
-                <td>&nbsp;&nbsp;&nbsp;</td>
-                <td>decals Variation</td>
-                <td>
-                  <button class="btnn" id="decalsvariation_left" type="button">
-                    &lt;
-                  </button>
-                </td>
-                <td>
-                  <input id="decalsvariationid" type="number" min="0" step="1" value="0" />
-                  </input>
-                </td>
-                <td>
-
-                  <button class="btnn" id="decalsvariation_right" type="button">
-                    &gt;
-                  </button>
-                </td>
-
-              </tr>
-
-              <tr>
-                <td>tops</td>
-                <td>
-                  <button class="btnn" id="tops_left" type="button">
-                    &lt;
-                  </button>
-                </td>
-                <td>
-                  <input id="topsid" type="number" min="0" step="1" value="0" />
-                  </input>
-
-                </td>
-                <td>
-
-                  <button class="btnn" id="tops_right" type="button">
-                    &gt;
-                  </button>
-                </td>
-
-                <td>&nbsp;&nbsp;&nbsp;</td>
-                <td>tops Variation</td>
-                <td>
-                  <button class="btnn" id="topsvariation_left" type="button">
-                    &lt;
-                  </button>
-                </td>
-                <td>
-                  <input id="topsvariationid" type="number" min="0" step="1" value="0" />
-                  </input>
-                </td>
-                <td>
-
-                  <button class="btnn" id="topsvariation_right" type="button">
-                    &gt;
-                  </button>
-                </td>
-
-              </tr>
-
-            </table>
-          </li>
-
-
-
-        </ul>
-
-      </div>
-    </div>
-
-    <!--<div id="Clothes" class="tabcontent">
+
+    <div id="container">
+        <div class="tab">
+            <button id="Clothes" class="tablinks">Clothes</button>
+            <!--<button class="tablinks">Clothes</button>-->
+            <button id="Specials" class="tablinks">Specials</button>
+            <button id="viewFace" class="tablinks">FaceView</button>
+            <button id="viewBody" class="tablinks">BodyView</button>
+            <button id="FaceCreation" class="tablinks">Face</button>
+            <button id="etc" class="tablinks">ETC</button>
+        </div>
+
+        <div id="ClothesTAB" class="tabcontent">
+            <div>
+                <ul>
+                    <li>
+                        <table>
+
+
+                            <tr>
+                                <td>masks</td>
+                                <td>
+                                    <button class="btnn" id="masks_left" type="button">
+                                        &lt;
+                                    </button>
+                                </td>
+                                <td>
+                                    <input class="clotheIDField" id="masksid" type="number" min="0" step="1"
+                                        value="0" />
+                                    </input>
+
+                                </td>
+                                <td>
+
+                                    <button class="btnn" id="masks_right" type="button">
+                                        &gt;
+                                    </button>
+                                </td>
+
+                                <td>&nbsp;&nbsp;&nbsp;</td>
+                                <td>masks Variation</td>
+                                <td>
+                                    <button class="btnn" id="masksvariation_left" type="button">
+                                        &lt;
+                                    </button>
+                                </td>
+                                <td>
+                                    <input class="clotheIDField" id="masksvariationid" type="number" min="0" step="1"
+                                        value="0" />
+                                    </input>
+                                </td>
+                                <td>
+
+                                    <button class="btnn" id="masksvariation_right" type="button">
+                                        &gt;
+                                    </button>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td>hair</td>
+                                <td>
+                                    <button class="btnn" id="hair_left" type="button">
+                                        &lt;
+                                    </button>
+                                </td>
+                                <td>
+                                    <input class="clotheIDField" id="hairid" type="number" min="0" step="1" value="0" />
+                                    </input>
+
+                                </td>
+                                <td>
+
+                                    <button class="btnn" id="hair_right" type="button">
+                                        &gt;
+                                    </button>
+                                </td>
+
+                                <td>&nbsp;&nbsp;&nbsp;</td>
+                                <td>hair Variation</td>
+                                <td>
+                                    <button class="btnn" id="hairvariation_left" type="button">
+                                        &lt;
+                                    </button>
+                                </td>
+                                <td>
+                                    <input class="clotheIDField" id="hairvariationid" type="number" min="0" step="1"
+                                        value="0" />
+                                    </input>
+                                </td>
+                                <td>
+
+                                    <button class="btnn" id="hairvariation_right" type="button">
+                                        &gt;
+                                    </button>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td>torso</td>
+                                <td>
+                                    <button class="btnn" id="torso_left" type="button">
+                                        &lt;
+                                    </button>
+                                </td>
+                                <td>
+                                    <input class="clotheIDField" id="torsoid" type="number" min="0" step="1"
+                                        value="0" />
+                                    </input>
+
+                                </td>
+                                <td>
+
+                                    <button class="btnn" id="torso_right" type="button">
+                                        &gt;
+                                    </button>
+                                </td>
+
+                                <td>&nbsp;&nbsp;&nbsp;</td>
+                                <td>torso Variation</td>
+                                <td>
+                                    <button class="btnn" id="torsovariation_left" type="button">
+                                        &lt;
+                                    </button>
+                                </td>
+                                <td>
+                                    <input class="clotheIDField" id="torsovariationid" type="number" min="0" step="1"
+                                        value="0" />
+                                    </input>
+                                </td>
+                                <td>
+
+                                    <button class="btnn" id="torsovariation_right" type="button">
+                                        &gt;
+                                    </button>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td>legs</td>
+                                <td>
+                                    <button class="btnn" id="legs_left" type="button">
+                                        &lt;
+                                    </button>
+                                </td>
+                                <td>
+                                    <input class="clotheIDField" id="legsid" type="number" min="0" step="1" value="0" />
+                                    </input>
+
+                                </td>
+                                <td>
+
+                                    <button class="btnn" id="legs_right" type="button">
+                                        &gt;
+                                    </button>
+                                </td>
+
+                                <td>&nbsp;&nbsp;&nbsp;</td>
+                                <td>legs Variation</td>
+                                <td>
+                                    <button class="btnn" id="legsvariation_left" type="button">
+                                        &lt;
+                                    </button>
+                                </td>
+                                <td>
+                                    <input class="clotheIDField" id="legsvariationid" type="number" min="0" step="1"
+                                        value="0" />
+                                    </input>
+                                </td>
+                                <td>
+
+                                    <button class="btnn" id="legsvariation_right" type="button">
+                                        &gt;
+                                    </button>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td>bags</td>
+                                <td>
+                                    <button class="btnn" id="bags_left" type="button">
+                                        &lt;
+                                    </button>
+                                </td>
+                                <td>
+                                    <input class="clotheIDField" id="bagsid" type="number" min="0" step="1" value="0" />
+                                    </input>
+
+                                </td>
+                                <td>
+
+                                    <button class="btnn" id="bags_right" type="button">
+                                        &gt;
+                                    </button>
+                                </td>
+
+                                <td>&nbsp;&nbsp;&nbsp;</td>
+                                <td>bags Variation</td>
+                                <td>
+                                    <button class="btnn" id="bagsvariation_left" type="button">
+                                        &lt;
+                                    </button>
+                                </td>
+                                <td>
+                                    <input class="clotheIDField" id="bagsvariationid" type="number" min="0" step="1"
+                                        value="0" />
+                                    </input>
+                                </td>
+                                <td>
+
+                                    <button class="btnn" id="bagsvariation_right" type="button">
+                                        &gt;
+                                    </button>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td>shoes</td>
+                                <td>
+                                    <button class="btnn" id="shoes_left" type="button">
+                                        &lt;
+                                    </button>
+                                </td>
+                                <td>
+                                    <input class="clotheIDField" id="shoesid" type="number" min="0" step="1"
+                                        value="0" />
+                                    </input>
+
+                                </td>
+                                <td>
+
+                                    <button class="btnn" id="shoes_right" type="button">
+                                        &gt;
+                                    </button>
+                                </td>
+
+                                <td>&nbsp;&nbsp;&nbsp;</td>
+                                <td>shoes Variation</td>
+                                <td>
+                                    <button class="btnn" id="shoesvariation_left" type="button">
+                                        &lt;
+                                    </button>
+                                </td>
+                                <td>
+                                    <input class="clotheIDField" id="shoesvariationid" type="number" min="0" step="1"
+                                        value="0" />
+                                    </input>
+                                </td>
+                                <td>
+
+                                    <button class="btnn" id="shoesvariation_right" type="button">
+                                        &gt;
+                                    </button>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td>accessories</td>
+                                <td>
+                                    <button class="btnn" id="accessories_left" type="button">
+                                        &lt;
+                                    </button>
+                                </td>
+                                <td>
+                                    <input class="clotheIDField" id="accessoriesid" type="number" min="0" step="1"
+                                        value="0" />
+                                    </input>
+
+                                </td>
+                                <td>
+
+                                    <button class="btnn" id="accessories_right" type="button">
+                                        &gt;
+                                    </button>
+                                </td>
+
+                                <td>&nbsp;&nbsp;&nbsp;</td>
+                                <td>accessories Variation</td>
+                                <td>
+                                    <button class="btnn" id="accessoriesvariation_left" type="button">
+                                        &lt;
+                                    </button>
+                                </td>
+                                <td>
+                                    <input class="clotheIDField" id="accessoriesvariationid" type="number" min="0"
+                                        step="1" value="0" />
+                                    </input>
+                                </td>
+                                <td>
+
+                                    <button class="btnn" id="accessoriesvariation_right" type="button">
+                                        &gt;
+                                    </button>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td>undershirts</td>
+                                <td>
+                                    <button class="btnn" id="undershirts_left" type="button">
+                                        &lt;
+                                    </button>
+                                </td>
+                                <td>
+                                    <input class="clotheIDField" id="undershirtsid" type="number" min="0" step="1"
+                                        value="0" />
+                                    </input>
+
+                                </td>
+                                <td>
+
+                                    <button class="btnn" id="undershirts_right" type="button">
+                                        &gt;
+                                    </button>
+                                </td>
+
+                                <td>&nbsp;&nbsp;&nbsp;</td>
+                                <td>undershirts Variation</td>
+                                <td>
+                                    <button class="btnn" id="undershirtsvariation_left" type="button">
+                                        &lt;
+                                    </button>
+                                </td>
+                                <td>
+                                    <input class="clotheIDField" id="undershirtsvariationid" type="number" min="0"
+                                        step="1" value="0" />
+                                    </input>
+                                </td>
+                                <td>
+
+                                    <button class="btnn" id="undershirtsvariation_right" type="button">
+                                        &gt;
+                                    </button>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td>bodyArmor</td>
+                                <td>
+                                    <button class="btnn" id="bodyArmor_left" type="button">
+                                        &lt;
+                                    </button>
+                                </td>
+                                <td>
+                                    <input class="clotheIDField" id="bodyArmorid" type="number" min="0" step="1"
+                                        value="0" />
+                                    </input>
+
+                                </td>
+                                <td>
+
+                                    <button class="btnn" id="bodyArmor_right" type="button">
+                                        &gt;
+                                    </button>
+                                </td>
+
+                                <td>&nbsp;&nbsp;&nbsp;</td>
+                                <td>bodyArmor Variation</td>
+                                <td>
+                                    <button class="btnn" id="bodyArmorvariation_left" type="button">
+                                        &lt;
+                                    </button>
+                                </td>
+                                <td>
+                                    <input class="clotheIDField" id="bodyArmorvariationid" type="number" min="0"
+                                        step="1" value="0" />
+                                    </input>
+                                </td>
+                                <td>
+
+                                    <button class="btnn" id="bodyArmorvariation_right" type="button">
+                                        &gt;
+                                    </button>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td>decals</td>
+                                <td>
+                                    <button class="btnn" id="decals_left" type="button">
+                                        &lt;
+                                    </button>
+                                </td>
+                                <td>
+                                    <input class="clotheIDField" id="decalsid" type="number" min="0" step="1"
+                                        value="0" />
+                                    </input>
+
+                                </td>
+                                <td>
+
+                                    <button class="btnn" id="decals_right" type="button">
+                                        &gt;
+                                    </button>
+                                </td>
+
+                                <td>&nbsp;&nbsp;&nbsp;</td>
+                                <td>decals Variation</td>
+                                <td>
+                                    <button class="btnn" id="decalsvariation_left" type="button">
+                                        &lt;
+                                    </button>
+                                </td>
+                                <td>
+                                    <input class="clotheIDField" id="decalsvariationid" type="number" min="0" step="1"
+                                        value="0" />
+                                    </input>
+                                </td>
+                                <td>
+
+                                    <button class="btnn" id="decalsvariation_right" type="button">
+                                        &gt;
+                                    </button>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td>tops</td>
+                                <td>
+                                    <button class="btnn" id="tops_left" type="button">
+                                        &lt;
+                                    </button>
+                                </td>
+                                <td>
+                                    <input class="clotheIDField" id="topsid" type="number" min="0" step="1" value="0" />
+                                    </input>
+
+                                </td>
+                                <td>
+
+                                    <button class="btnn" id="tops_right" type="button">
+                                        &gt;
+                                    </button>
+                                </td>
+
+                                <td>&nbsp;&nbsp;&nbsp;</td>
+                                <td>tops Variation</td>
+                                <td>
+                                    <button class="btnn" id="topsvariation_left" type="button">
+                                        &lt;
+                                    </button>
+                                </td>
+                                <td>
+                                    <input class="clotheIDField" id="topsvariationid" type="number" min="0" step="1"
+                                        value="0" />
+                                    </input>
+                                </td>
+                                <td>
+
+                                    <button class="btnn" id="topsvariation_right" type="button">
+                                        &gt;
+                                    </button>
+                                </td>
+
+                            </tr>
+
+                        </table>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!--<div id="Clothes" class="tabcontent">
       <h3>Clothes</h3>
       <p>Paris is the capital of France.</p>
     </div>-->
 
-    <div id="SpecialsTAB" class="tabcontent">
-      <h3>Specials</h3>
-      <p>Tokyo is the capital of Japan.</p>
+        <div id="SpecialsTAB" class="tabcontent">
+            <div>
+                <ul>
+                    <li>
+                        <table>
+                            <tr>
+                                <td>hats</td>
+                                <td>
+                                    <button class="btnn" id="hats_left" type="button">
+                                        &lt;
+                                    </button>
+                                </td>
+                                <td>
+                                    <input class="clotheIDField" id="hatsid" type="number" min="0" step="1" value="0" />
+                                    </input>
+
+                                </td>
+                                <td>
+
+                                    <button class="btnn" id="hats_right" type="button">
+                                        &gt;
+                                    </button>
+                                </td>
+
+                                <td>&nbsp;&nbsp;&nbsp;</td>
+                                <td>hats Variation</td>
+                                <td>
+                                    <button class="btnn" id="hatsvariation_left" type="button">
+                                        &lt;
+                                    </button>
+                                </td>
+                                <td>
+                                    <input class="clotheIDField" id="hatsvariationid" type="number" min="0" step="1"
+                                        value="0" />
+                                    </input>
+                                </td>
+                                <td>
+
+                                    <button class="btnn" id="hatsvariation_right" type="button">
+                                        &gt;
+                                    </button>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td>glasses</td>
+                                <td>
+                                    <button class="btnn" id="glasses_left" type="button">
+                                        &lt;
+                                    </button>
+                                </td>
+                                <td>
+                                    <input class="clotheIDField" id="glassesid" type="number" min="0" step="1"
+                                        value="0" />
+                                    </input>
+
+                                </td>
+                                <td>
+
+                                    <button class="btnn" id="glasses_right" type="button">
+                                        &gt;
+                                    </button>
+                                </td>
+
+                                <td>&nbsp;&nbsp;&nbsp;</td>
+                                <td>glasses Variation</td>
+                                <td>
+                                    <button class="btnn" id="glassesvariation_left" type="button">
+                                        &lt;
+                                    </button>
+                                </td>
+                                <td>
+                                    <input class="clotheIDField" id="glassesvariationid" type="number" min="0" step="1"
+                                        value="0" />
+                                    </input>
+                                </td>
+                                <td>
+
+                                    <button class="btnn" id="glassesvariation_right" type="button">
+                                        &gt;
+                                    </button>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td>ears</td>
+                                <td>
+                                    <button class="btnn" id="ears_left" type="button">
+                                        &lt;
+                                    </button>
+                                </td>
+                                <td>
+                                    <input class="clotheIDField" id="earsid" type="number" min="0" step="1" value="0" />
+                                    </input>
+
+                                </td>
+                                <td>
+
+                                    <button class="btnn" id="ears_right" type="button">
+                                        &gt;
+                                    </button>
+                                </td>
+
+                                <td>&nbsp;&nbsp;&nbsp;</td>
+                                <td>ears Variation</td>
+                                <td>
+                                    <button class="btnn" id="earsvariation_left" type="button">
+                                        &lt;
+                                    </button>
+                                </td>
+                                <td>
+                                    <input class="clotheIDField" id="earsvariationid" type="number" min="0" step="1"
+                                        value="0" />
+                                    </input>
+                                </td>
+                                <td>
+
+                                    <button class="btnn" id="earsvariation_right" type="button">
+                                        &gt;
+                                    </button>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td>watches</td>
+                                <td>
+                                    <button class="btnn" id="watches_left" type="button">
+                                        &lt;
+                                    </button>
+                                </td>
+                                <td>
+                                    <input class="clotheIDField" id="watchesid" type="number" min="0" step="1"
+                                        value="0" />
+                                    </input>
+
+                                </td>
+                                <td>
+
+                                    <button class="btnn" id="watches_right" type="button">
+                                        &gt;
+                                    </button>
+                                </td>
+
+                                <td>&nbsp;&nbsp;&nbsp;</td>
+                                <td>watches Variation</td>
+                                <td>
+                                    <button class="btnn" id="watchesvariation_left" type="button">
+                                        &lt;
+                                    </button>
+                                </td>
+                                <td>
+                                    <input class="clotheIDField" id="watchesvariationid" type="number" min="0" step="1"
+                                        value="0" />
+                                    </input>
+                                </td>
+                                <td>
+
+                                    <button class="btnn" id="watchesvariation_right" type="button">
+                                        &gt;
+                                    </button>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td>bracelets</td>
+                                <td>
+                                    <button class="btnn" id="bracelets_left" type="button">
+                                        &lt;
+                                    </button>
+                                </td>
+                                <td>
+                                    <input class="clotheIDField" id="braceletsid" type="number" min="0" step="1"
+                                        value="0" />
+                                    </input>
+
+                                </td>
+                                <td>
+
+                                    <button class="btnn" id="bracelets_right" type="button">
+                                        &gt;
+                                    </button>
+                                </td>
+
+                                <td>&nbsp;&nbsp;&nbsp;</td>
+                                <td>bracelets Variation</td>
+                                <td>
+                                    <button class="btnn" id="braceletsvariation_left" type="button">
+                                        &lt;
+                                    </button>
+                                </td>
+                                <td>
+                                    <input class="clotheIDField" id="braceletsvariationid" type="number" min="0"
+                                        step="1" value="0" />
+                                    </input>
+                                </td>
+                                <td>
+
+                                    <button class="btnn" id="braceletsvariation_right" type="button">
+                                        &gt;
+                                    </button>
+                                </td>
+
+                            </tr>
+                        </table>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="FaceCreationTAB" class="tabcontent">
+            <div>
+                <label for="noseWidth">noseWidth</label>
+                <input type="range" min="-100" max="100" value="0" class="slider" id="noseWidthSlider">
+            </div>
+            <div>
+                &nbsp;
+            </div>
+            <div>
+                <label for="noseHeight">noseHeight</label>
+                <input type="range" min="-100" max="100" value="0" class="slider" id="noseHeightSlider">
+            </div>
+            <div>
+                &nbsp;
+            </div>
+            <div>
+                <label for="noseLength">noseLength</label>
+                <input type="range" min="-100" max="100" value="0" class="slider" id="noseLengthSlider">
+            </div>
+            <div>
+                &nbsp;
+            </div>
+            <div>
+                <label for="noseBridge">noseBridge</label>
+                <input type="range" min="-100" max="100" value="0" class="slider" id="noseBridgeSlider">
+            </div>
+            <div>
+                &nbsp;
+            </div>
+            <div>
+                <label for="noseTip">noseTip</label>
+                <input type="range" min="-100" max="100" value="0" class="slider" id="noseTipSlider">
+            </div>
+            <div>
+                &nbsp;
+            </div>
+            <div>
+                <label for="noseBridgeShift">noseBridgeShift</label>
+                <input type="range" min="-100" max="100" value="0" class="slider" id="noseBridgeShiftSlider">
+            </div>
+            <div>
+                &nbsp;
+            </div>
+            <div>
+                <label for="browHeight">browHeight</label>
+                <input type="range" min="-100" max="100" value="0" class="slider" id="browHeightSlider">
+            </div>
+            <div>
+                &nbsp;
+            </div>
+            <div>
+                <label for="browWidth">browWidth</label>
+                <input type="range" min="-100" max="100" value="0" class="slider" id="browWidthSlider">
+            </div>
+            <div>
+                &nbsp;
+            </div>
+            <div>
+                <label for="cheekboneHeight">cheekboneHeight</label>
+                <input type="range" min="-100" max="100" value="0" class="slider" id="cheekboneHeightSlider">
+            </div>
+            <div>
+                &nbsp;
+            </div>
+            <div>
+                <label for="cheekboneWidth">cheekboneWidth</label>
+                <input type="range" min="-100" max="100" value="0" class="slider" id="cheekboneWidthSlider">
+            </div>
+            <div>
+                &nbsp;
+            </div>
+            <div>
+                <label for="cheeksWidth">cheeksWidth</label>
+                <input type="range" min="-100" max="100" value="0" class="slider" id="cheeksWidthSlider">
+            </div>
+            <div>
+                &nbsp;
+            </div>
+            <div>
+                <label for="eyes">eyes</label>
+                <input type="range" min="-100" max="100" value="0" class="slider" id="eyesSlider">
+            </div>
+            <div>
+                &nbsp;
+            </div>
+            <div>
+                <label for="lips_">lips_</label>
+                <input type="range" min="-100" max="100" value="0" class="slider" id="lips_Slider">
+            </div>
+            <div>
+                &nbsp;
+            </div>
+            <div>
+                <label for="jawWidth">jawWidth</label>
+                <input type="range" min="-100" max="100" value="0" class="slider" id="jawWidthSlider">
+            </div>
+            <div>
+                &nbsp;
+            </div>
+            <div>
+                <label for="jawHeight">jawHeight</label>
+                <input type="range" min="-100" max="100" value="0" class="slider" id="jawHeightSlider">
+            </div>
+            <div>
+                &nbsp;
+            </div>
+            <div>
+                <label for="chinLength">chinLength</label>
+                <input type="range" min="-100" max="100" value="0" class="slider" id="chinLengthSlider">
+            </div>
+            <div>
+                &nbsp;
+            </div>
+            <div>
+                <label for="chinPosition">chinPosition</label>
+                <input type="range" min="-100" max="100" value="0" class="slider" id="chinPositionSlider">
+            </div>
+            <div>
+                &nbsp;
+            </div>
+            <div>
+                <label for="chinWidth">chinWidth</label>
+                <input type="range" min="-100" max="100" value="0" class="slider" id="chinWidthSlider">
+            </div>
+            <div>
+                &nbsp;
+            </div>
+            <div>
+                <label for="chinShape">chinShape</label>
+                <input type="range" min="-100" max="100" value="0" class="slider" id="chinShapeSlider">
+            </div>
+            <div>
+                &nbsp;
+            </div>
+            <div>
+                <label for="neckWidth">neckWidth</label>
+                <input type="range" min="-100" max="100" value="0" class="slider" id="neckWidthSlider">
+            </div>
+            <div>
+                &nbsp;
+            </div>
+
+        </div>
+
+        <div id="etcTAB" class="tabcontent">
+            <div>
+                <label for="charaname">Full Character Name:</label>
+                <textarea name="charaname" id="charaname" cols="12" rows="1"></textarea>
+            </div>
+            <div>
+                &nbsp;
+            </div>
+            <div>
+                <label for="gender">Character Gender:</label>
+                <select name="gender" id="gender">
+                    <option value=0>Male</option>
+                    <option value=1>Female</option>
+                </select>
+
+            </div>
+            <div>
+                &nbsp;
+            </div>
+            <div>
+                <ul>
+                    <li>
+
+                        <tr>
+                            <td>head</td>
+                            <td>
+                                <button class="btnn" id="head_left" type="button">
+                                    &lt;
+                                </button>
+                            </td>
+                            <td>
+                                <input class="clotheIDField" id="headid" type="number" min="0" step="1" value="0" />
+                                </input>
+
+                            </td>
+                            <td>
+
+                                <button class="btnn" id="head_right" type="button">
+                                    &gt;
+                                </button>
+                            </td>
+
+                            <td>&nbsp;&nbsp;&nbsp;</td>
+                            <td>Skin Tone</td>
+                            <td>
+                                <button class="btnn" id="headvariation_left" type="button">
+                                    &lt;
+                                </button>
+                            </td>
+                            <td>
+                                <input class="clotheIDField" id="headvariationid" type="number" min="0" step="1"
+                                    value="0" />
+                                </input>
+                            </td>
+                            <td>
+
+                                <button class="btnn" id="headvariation_right" type="button">
+                                    &gt;
+                                </button>
+                            </td>
+
+                        </tr>
+
+                        </table>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="createbottom" class="bottomrow">
+            
+            <button id="confirmCreation" class="bottombtnn">Confirm</button>
+
+        </div>
+        <div id="buybottom" class="bottomrow">
+            <button id="confirm" class="bottombtnn">Confirm</button>
+            <button id="cancel" class="bottombtnn">Cancel</button>
+        </div>
+        <!--<script src="./tabsscript.js" type="text/javascript"></script>-->
+
+        <script src="./jquery.min.js" type="text/javascript"></script>
+        <script src="./jquery-ui.min.js" type="text/javascript"></script>
+        <script src="./store.js" type="text/javascript"></script>
+
+
+
     </div>
-
-    <div id="FaceCreationTAB" class="tabcontent">
-      <h3>Face</h3>
-      <p>Tokyo is the capital of Japan.</p>
-    </div>
-
-    <div id="etcTAB" class="tabcontent">
-      <h3>etc</h3>
-      <p>Tokyo is the capital of Japan.</p>
-    </div>
-
-    <div class="bottomrow">
-      <button class="bottombtnn">A</button>
-      <button class="bottombtnn">B</button>
-    </div>
-    <!--<script src="./tabsscript.js" type="text/javascript"></script>-->
-
-    <script src="./jquery.min.js" type="text/javascript"></script>
-    <script src="./jquery-ui.min.js" type="text/javascript"></script>
-    <script src="./store.js" type="text/javascript"></script>
-
-
-
-  </div>
 </body>
 
 </html>
