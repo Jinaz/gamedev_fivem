@@ -754,7 +754,17 @@ namespace ConsoleCommands
             EventHandlers["client:applyLooks"] += new Action<Dictionary<string, int>>(applyLooks);
 
             //Debug.WriteLine("console commands started");
+
+            
         }
+
+        int cam = -1;
+        string zoom = "ropa";
+        bool isCameraActive = false;
+        float camHeading = 0.0f;
+        float angle = 0.0f;
+        float camOffset = 1.8f;
+        float zoomOffset  = 0.0f;
 
         private void applyLooks(Dictionary<string, int> obj)
         {
@@ -853,6 +863,78 @@ namespace ConsoleCommands
 
             })
             , false);
+
+            RegisterCommand("triggerCam", new Action<int, List<object>, string>(async (source, args, raw) =>
+            {
+                /**
+                 * local cam = -1							-- Camera control
+local zoom = "ropa"					-- Define which tab is shown first (Default: Head)
+local isCameraActive
+local camHeading = 0.0
+local angulo = 0
+local camOffset, zoomOffset = 1.8, 0.0
+                 * 
+                 * 
+                 * function CreateSkinCam()
+	if not DoesCamExist(cam) then
+		cam = CreateCam('DEFAULT_SCRIPTED_CAMERA', true)
+	end
+
+	SetCamActive(cam, true)
+	RenderScriptCams(true, true, 500, true, true)
+
+	local playerPed = PlayerPedId()
+	local playerHeading = GetEntityHeading(playerPed)
+	if playerHeading + 94 < 360.0 then
+		camHeading = playerHeading + 94.0
+	elseif playerHeading + 94 >= 360.0 then
+		camHeading = playerHeading - 266.0 --194
+	end
+	angulo = camHeading
+	isCameraActive = true
+	SetCamCoord(cam, GetEntityCoords(GetPlayerPed(-1)))
+end
+
+function DeleteSkinCam()
+	isCameraActive = false
+	SetCamActive(cam, false)
+	RenderScriptCams(false, true, 500, true, true)
+	cam = nil
+end
+                 * 
+                 */
+                var cam = CreateCam("DEFAULT_SCRIPTED_CAMERA", true);
+                SetCamActive(cam, true);
+                RenderScriptCams(true, true, 500, true, true);
+
+                int playerPed = Game.PlayerPed.Handle;
+                float playerHeading = GetEntityHeading(playerPed);
+                if (playerHeading + 94 < 360.0f)
+                {
+                    camHeading = playerHeading + 94.0f;
+                }else if (playerHeading + 94 >= 360.0f)
+                {
+                    camHeading = playerHeading - 266.0f;
+                }
+                angle = camHeading;
+                isCameraActive = true;
+                var coords = GetEntityCoords(Game.PlayerPed.Handle, true);
+                SetCamCoord(cam, coords.X, coords.Y, coords.Z);
+
+
+            }), false);
+
+            RegisterCommand("untogglecam", new Action<int, List<object>, string>(async (source, args, raw) =>
+            {
+                isCameraActive = false;
+
+                SetCamActive(cam, false);
+
+                RenderScriptCams(false, true, 500, true, true);
+
+                cam = -1;
+            }), false);
+
 
             RegisterCommand("chatM", new Action<int, List<object>, string>(async (source, args, raw) =>
             {

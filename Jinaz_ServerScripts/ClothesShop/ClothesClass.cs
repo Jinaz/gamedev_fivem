@@ -64,6 +64,8 @@ namespace ClothesShop
         public float chinShape = 0.0f;
         public float neckWidth = 0.0f;
 
+        public ClothesClass() { }
+
         public ClothesClass(int head, int masks, int hair, int torso, int legs, int bags, int shoes,
             int accessories, int undershirts, int bodyArmor, int decals,
             int tops, int hats, int glasses, int ears, int watches, int bracelets,

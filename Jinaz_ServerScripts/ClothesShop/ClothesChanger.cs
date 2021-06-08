@@ -12,43 +12,289 @@ using CitizenFX.Core.UI;
 using System.Drawing;
 using Newtonsoft.Json;
 using System.Dynamic;
+using CitizenFX.Core.Native;
 
 namespace ClothesShop
 {
     public class ClothesChanger : BaseScript
     {
+        ClothesClass currentclothes;
+        private bool inshop = false;
+        private Model cmodel;
+        protected Scaleform buttons = new Scaleform("instructional_buttons");
+        public static Control viewToggleControl = Control.Aim;
+        int cgender = 0;
+        string playername = "";
+
         public ClothesChanger()
         {
 
-            EventHandlers["clths:changeClths"] += new Action(openUI);
+            currentclothes = new ClothesClass();
 
-            RegisterNuiCallbackType("updateLoginscrChara");
-            EventHandlers["__cfx_nui:updateLoginscrChara"] += new Action<IDictionary<string, object>, CallbackDelegate>(updateChar);
+            //method to set clothes as an event used in wardrobe via server
+            EventHandlers["clths:setclths"] += new Action<string>(setClothesCall);
 
-
-            RegisterNuiCallbackType("creationDone");
-            EventHandlers["__cfx_nui:creationDone"] += new Action<IDictionary<string, object>, CallbackDelegate>(creationDone);
-
-            RegisterNuiCallbackType("charUpdate");
-            EventHandlers["__cfx_nui:charUpdate"] += new Action<IDictionary<string, object>, CallbackDelegate>(charChange);
-
-            EventHandlers["clths:setClths"] += new Action<string, int, int>(setClothesCall);
-
+            //standard enter shop methods
+            EventHandlers["clths:entershop"] += new Action(entershop);
+            RegisterNuiCallbackType("checkout");
+            EventHandlers["__cfx_nui:checkout"] += new Action<IDictionary<string, object>, CallbackDelegate>(checkout);
+            EventHandlers["clths:checkoutFail"] += new Action<bool>(checkoutReturned);
             RegisterNuiCallbackType("exit");
             EventHandlers["__cfx_nui:exit"] += new Action<IDictionary<string, object>, CallbackDelegate>(exit);
 
+            //update char and control camera
+            RegisterNuiCallbackType("charUpdate");
+            EventHandlers["__cfx_nui:charUpdate"] += new Action<IDictionary<string, object>, CallbackDelegate>(charChange);
+            RegisterNuiCallbackType("unlockcam");
+            EventHandlers["__cfx_nui:unlockcam"] += new Action<IDictionary<string, object>, CallbackDelegate>(unlockcam);
+
+            //methods for wardrobe do not implement here
+            //EventHandlers["clths:saveinDB"] += new Action<string>(saveInDB);
+            //EventHandlers["clths:saveinDB"] += new Action<string>(loadLooks);
+
+            //create done so save to database
+            EventHandlers["clths:changeClths"] += new Action<int>(startCharacterCreation);
+            RegisterNuiCallbackType("creationDone");
+            EventHandlers["__cfx_nui:creationDone"] += new Action<IDictionary<string, object>, CallbackDelegate>(creationDone);
+            
+
+            
             cmodel = Game.PlayerPed.Model;
             Tick += OnTick;
         }
-        private bool lockHCamera = false;
-        private bool lockVCamera = false;
-        private Model cmodel;
-        private async Task OnTick()
+
+        private void updateCharVisual(string clothesAsJson)
         {
-            if (lockHCamera) SetGameplayCamRelativeHeading(-1 * GetGameplayCamRelativeHeading());
-            if (lockVCamera) SetGameplayCamRelativePitch(GetGameplayCamRelativePitch(), 0.0f);
+            var clothes = JsonConvert.DeserializeObject<ClothesClass>(clothesAsJson);
+
+
+            int head = clothes.head;
+            int headvariation = clothes.head_variation;
+            Game.PlayerPed.Style[PedComponents.Face].SetVariation(head, headvariation);
+
+            int masks = clothes.masks;
+            int masksvariation = clothes.masks_variation;
+            Game.PlayerPed.Style[PedComponents.Head].SetVariation(masks, masksvariation);
+
+            int hair = clothes.hair;
+            int hairvariation = clothes.hair_variation;
+            Game.PlayerPed.Style[PedComponents.Hair].SetVariation(hair, hairvariation);
+
+            int torso = clothes.torso;
+            int torsovariation = clothes.torso_variation;
+            Game.PlayerPed.Style[PedComponents.Torso].SetVariation(torso, torsovariation);
+
+            int legs = clothes.legs;
+            int legsvariation = clothes.legs_variation;
+            Game.PlayerPed.Style[PedComponents.Legs].SetVariation(legs, legsvariation);
+
+            int bags = clothes.bags;
+            int bagsvariation = clothes.bags_variation;
+            Game.PlayerPed.Style[PedComponents.Hands].SetVariation(bags, bagsvariation);
+
+            int shoes = clothes.shoes;
+            int shoesvariation = clothes.shoes_variation;
+            Game.PlayerPed.Style[PedComponents.Shoes].SetVariation(shoes, shoesvariation);
+
+            int accessories = clothes.accessories;
+            int accessoriesvariation = clothes.accessories_variation;
+            Game.PlayerPed.Style[PedComponents.Special1].SetVariation(accessories, accessoriesvariation);
+
+            int undershirts = clothes.undershirts;
+            int undershirtsvariation = clothes.undershirts_variation;
+            Game.PlayerPed.Style[PedComponents.Special2].SetVariation(undershirts, undershirtsvariation);
+
+            int bodyArmor = clothes.bodyArmor;
+            int bodyArmorvariation = clothes.bodyArmor_variation;
+            Game.PlayerPed.Style[PedComponents.Special3].SetVariation(bodyArmor, bodyArmorvariation);
+
+            int decals = clothes.decals;
+            int decalsvariation = clothes.decals_variation;
+            Game.PlayerPed.Style[PedComponents.Textures].SetVariation(decals, decalsvariation);
+
+            int tops = clothes.tops;
+            int topsvariation = clothes.tops_variation;
+            Game.PlayerPed.Style[PedComponents.Torso2].SetVariation(tops, topsvariation);
+
+            int hats = clothes.hats;
+            int hatsvariation = clothes.hats_variation;
+            Game.PlayerPed.Style[PedProps.Hats].SetVariation(hats, hatsvariation);
+
+            int glasses = clothes.glasses;
+            int glassesvariation = clothes.glasses_variation;
+            Game.PlayerPed.Style[PedProps.Glasses].SetVariation(glasses, glassesvariation);
+
+            int ears = clothes.ears;
+            int earsvariation = clothes.ears_variation;
+            Game.PlayerPed.Style[PedProps.EarPieces].SetVariation(ears, earsvariation);
+
+            int watches = clothes.watches;
+            int watchesvariation = clothes.watches_variation;
+            Game.PlayerPed.Style[PedProps.Watches].SetVariation(watches, watchesvariation);
+
+            int bracelets = clothes.bracelets;
+            int braceletsvariation = clothes.bracelets_variation;
+            Game.PlayerPed.Style[PedProps.Wristbands].SetVariation(bracelets, braceletsvariation);
+
+            int pedid = Game.PlayerPed.Handle;
+            float noseWidth = clothes.noseWidth;
+            SetPedFaceFeature(pedid, 0, noseWidth);
+            float noseHeight = clothes.noseHeight;
+            SetPedFaceFeature(pedid, 0, noseHeight);
+            float noseLength = clothes.noseLength;
+            SetPedFaceFeature(pedid, 0, noseLength);
+            float noseBridge = clothes.noseBridge;
+            SetPedFaceFeature(pedid, 0, noseBridge);
+            float noseTip = clothes.noseTip;
+            SetPedFaceFeature(pedid, 0, noseTip);
+            float noseBridgeShift = clothes.noseBridgeShift;
+            SetPedFaceFeature(pedid, 0, noseBridgeShift);
+            float browHeight = clothes.browHeight;
+            SetPedFaceFeature(pedid, 0, browHeight);
+            float browWidth = clothes.browWidth;
+            SetPedFaceFeature(pedid, 0, browWidth);
+            float cheekboneHeight = clothes.cheekboneHeight;
+            SetPedFaceFeature(pedid, 0, cheekboneHeight);
+            float cheekboneWidth = clothes.cheekboneWidth;
+            SetPedFaceFeature(pedid, 0, cheekboneWidth);
+            float cheeksWidth = clothes.cheeksWidth;
+            SetPedFaceFeature(pedid, 0, cheeksWidth);
+            float eyes = clothes.eyes;
+            SetPedFaceFeature(pedid, 0, eyes);
+            float lips_ = clothes.lips_;
+            SetPedFaceFeature(pedid, 0, lips_);
+            float jawWidth = clothes.jawWidth;
+            SetPedFaceFeature(pedid, 0, jawWidth);
+            float jawHeight = clothes.jawHeight;
+            SetPedFaceFeature(pedid, 0, jawHeight);
+            float chinLength = clothes.chinLength;
+            SetPedFaceFeature(pedid, 0, chinLength);
+            float chinPosition = clothes.chinPosition;
+            SetPedFaceFeature(pedid, 0, chinPosition);
+            float chinWidth = clothes.chinWidth;
+            SetPedFaceFeature(pedid, 0, chinWidth);
+            float chinShape = clothes.chinShape;
+            SetPedFaceFeature(pedid, 0, chinShape);
+            float neckWidth = clothes.neckWidth;
+            SetPedFaceFeature(pedid, 0, neckWidth);
         }
 
+        private void checkoutReturned(bool failed)
+        {
+            if (failed)
+            {
+                updateCharVisual(JsonConvert.SerializeObject(currentclothes));
+            }
+        }
+
+        private void checkout(IDictionary<string, object> arg1, CallbackDelegate arg2)
+        {
+            
+            //get cost from arg1
+            int cost = Convert.ToInt32(arg1["price"]);
+
+            TriggerEvent("charinf:checkoutMoney", 0, cost);
+
+        }
+
+        private void entershop()
+        {
+            string jsonstring;
+            jsonstring = JsonConvert.SerializeObject(new
+            {
+                toggle = 0,
+                characreation = false,
+                gender = cgender,
+                head = currentclothes.head,
+                masks = currentclothes.masks,
+                hair = currentclothes.hair,
+                torso = currentclothes.torso,
+                legs = currentclothes.legs,
+                bags = currentclothes.bags,
+                shoes = currentclothes.shoes,
+                accessories = currentclothes.accessories,
+                undershirts = currentclothes.undershirts,
+                bodyArmor = currentclothes.bodyArmor,
+                decals = currentclothes.decals,
+                tops = currentclothes.tops,
+                hats = currentclothes.hats,
+                glasses = currentclothes.glasses,
+                ears = currentclothes.ears,
+                watches = currentclothes.watches,
+                bracelets = currentclothes.bracelets,
+                noseWidth = currentclothes.noseWidth,
+                noseHeight = currentclothes.noseHeight,
+                noseLength = currentclothes.noseLength,
+                noseBridge = currentclothes.noseBridge,
+                noseTip = currentclothes.noseTip,
+                noseBridgeShift = currentclothes.noseBridgeShift,
+                browHeight = currentclothes.browHeight,
+                browWidth = currentclothes.browWidth,
+                cheekboneHeight = currentclothes.cheekboneHeight,
+                cheekboneWidth = currentclothes.cheekboneWidth,
+                cheeksWidth = currentclothes.cheeksWidth,
+                eyes = currentclothes.eyes,
+                lips_ = currentclothes.lips_,
+                jawWidth = currentclothes.jawWidth,
+                jawHeight = currentclothes.jawHeight,
+                chinLength = currentclothes.chinLength,
+                chinPosition = currentclothes.chinPosition,
+                chinWidth = currentclothes.chinWidth,
+                chinShape = currentclothes.chinShape,
+                neckWidth = currentclothes.neckWidth,
+                head_variation = currentclothes.head_variation,
+                masks_variation = currentclothes.masks_variation,
+                hair_variation = currentclothes.hair_variation,
+                torso_variation = currentclothes.torso_variation,
+                legs_variation = currentclothes.legs_variation,
+                bags_variation = currentclothes.bags_variation,
+                shoes_variation = currentclothes.shoes_variation,
+                accessories_variation = currentclothes.accessories_variation,
+                undershirts_variation = currentclothes.undershirts_variation,
+                bodyArmor_variation = currentclothes.bodyArmor_variation,
+                decals_variation = currentclothes.decals_variation,
+                tops_variation = currentclothes.tops_variation,
+                hats_variation = currentclothes.hats_variation,
+                glasses_variation = currentclothes.glasses_variation,
+                ears_variation = currentclothes.ears_variation,
+                watches_variation = currentclothes.watches_variation,
+                bracelets_variation = currentclothes.bracelets_variation
+
+            });
+            SendNuiMessage(jsonstring);
+            SetNuiFocus(true, true);
+            inshop = true;
+        }
+
+        private void unlockcam(IDictionary<string, object> arg1, CallbackDelegate arg2)
+        {
+            SetNuiFocus(false, false);
+        }
+
+        public void InstructChangeView()
+        {
+            buttons.CallFunction("CLEAR_ALL");
+            buttons.CallFunction("TOGGLE_MOUSE_BUTTONS", 0);
+            buttons.CallFunction("CREATE_CONTAINER");
+
+            buttons.CallFunction("SET_DATA_SLOT", 0, Function.Call<string>((Hash)0x0499D7B09FC9B407, 2, (int)viewToggleControl, false), "ToggleMouse");
+
+            buttons.CallFunction("DRAW_INSTRUCTIONAL_BUTTONS", -1);
+        }
+        private async Task OnTick()
+        {
+            //if (lockHCamera) SetGameplayCamRelativeHeading(-1 * GetGameplayCamRelativeHeading());
+            //if (lockVCamera) SetGameplayCamRelativePitch(GetGameplayCamRelativePitch(), 0.0f);
+            InvalidateIdleCam();
+            InvalidateVehicleIdleCam();
+            InstructChangeView();
+            if (Game.IsControlJustReleased(0, viewToggleControl) && inshop)
+            {
+                SetNuiFocus(true, true);
+            }
+        }
+
+        //creating a char
         private void creationDone(IDictionary<string, object> arg1, CallbackDelegate arg2)
         {
             string jsonstring;
@@ -58,12 +304,11 @@ namespace ClothesShop
             });
             SendNuiMessage(jsonstring);
             SetNuiFocus(false, false);
-            lockVCamera = false;
-            lockHCamera = false;
+            inshop = false;
             playername = arg1["name"].ToString();
 
             Ped ped = Game.PlayerPed;
-            ClothesClass cc = new ClothesClass(head: ped.Style[PedComponents.Face].Index,
+            currentclothes = new ClothesClass(head: ped.Style[PedComponents.Face].Index,
              masks: ped.Style[PedComponents.Head].Index,
              hair: ped.Style[PedComponents.Hair].Index,
              torso: ped.Style[PedComponents.Torso].Index,
@@ -118,81 +363,17 @@ namespace ClothesShop
                 chinShape: GetPedFaceFeature(ped.Handle, 18),
                 neckWidth: GetPedFaceFeature(ped.Handle, 19));
             Debug.WriteLine("A");
-            var jss = JsonConvert.SerializeObject(cc);
+            var jss = JsonConvert.SerializeObject(currentclothes);
             Debug.WriteLine(jss);
             //send to SQLDB
             TriggerServerEvent("cbc:SaveLook", jss, playername,cgender);
             //trigger TP script
         }
 
-        int cgender = 0;
-        string playername = "";
-
+        //UI connector class, changes live when in ui change is submitted
         private async void charChange(IDictionary<string, object> arg1, CallbackDelegate arg2)
         {
-
-            /*
-             "head":0,\
-        "masks":0, \
-        "hair":0, \
-        "torso":0, \
-        "legs":0, \
-        "bags":0, \
-        "shoes":0, \
-        "accessories":0, \
-        "undershirts":0, \
-        "bodyArmor":0, \
-        "decals":0, \
-        "tops":0, \
-        "head_variation":0,\
-        "masks_variation":0, \
-        "hair_variation":0, \
-        "torso_variation":0, \
-        "legs_variation":0, \
-        "bags_variation":0, \
-        "shoes_variation":0, \
-        "accessories_variation":0, \
-        "undershirts_variation":0, \
-        "bodyArmor_variation":0, \
-        "decals_variation":0, \
-        "tops_variation":0, \
-        "hats":0, \
-        "glasses":0, \
-        "ears":0, \
-        "watches":0, \
-        "bracelets":0, \
-        "hats_variation":0, \
-        "glasses_variation":0, \
-        "ears_variation":0, \
-        "watches_variation":0, \
-        "bracelets_variation":0, \
-        "noseWidth":0.0,\
-        "noseHeight":0.0,\
-        "noseLength":0.0,\
-        "noseBridge":0.0,\
-        "noseTip":0.0,\
-        "noseBridgeShift":0.0,\
-        "browHeight":0.0,\
-        "browWidth":0.0,\
-        "cheekboneHeight":0.0,\
-        "cheekboneWidth":0.0,\
-        "cheeksWidth":0.0,\
-        "eyes":0.0,\
-        "lips_":0.0,\
-        "jawWidth":0.0,\
-        "jawHeight":0.0,\
-        "chinLength":0.0,\
-        "chinPosition":0.0,\
-        "chinWidth":0.0,\
-        "chinShape":0.0,\
-        "neckWidth":0.0\
-             */
-
-            //SetPedEyeColor();
-            //SetPedHeadOverlay();
-            //Game.PlayerPed.
-
-
+            
             int pedid = Game.PlayerPed.Handle;
             Debug.WriteLine(arg1["head"].ToString());
             int faceShape = Convert.ToInt32(arg1["head"].ToString());
@@ -358,46 +539,39 @@ namespace ClothesShop
             
         }
 
+        //UI connector class
         private void updateCharToHTML()
         {
             string jsonstring;
             jsonstring = JsonConvert.SerializeObject(new
             {
                 toggle = 2,
-                head_variation = 45,
-                masks_variation = Game.PlayerPed.Style[PedComponents.Head].TextureCount,
-                hair_variation = Game.PlayerPed.Style[PedComponents.Hair].TextureCount,
-                torso_variation = Game.PlayerPed.Style[PedComponents.Torso].TextureCount,
-                legs_variation = Game.PlayerPed.Style[PedComponents.Legs].TextureCount,
-                bags_variation = Game.PlayerPed.Style[PedComponents.Hands].TextureCount,
-                shoes_variation = Game.PlayerPed.Style[PedComponents.Shoes].TextureCount,
-                accessories_variation = Game.PlayerPed.Style[PedComponents.Special1].TextureCount,
-                undershirts_variation = Game.PlayerPed.Style[PedComponents.Special2].TextureCount,
-                bodyArmor_variation = Game.PlayerPed.Style[PedComponents.Special3].TextureCount,
-                decals_variation = Game.PlayerPed.Style[PedComponents.Textures].TextureCount,
-                tops_variation = Game.PlayerPed.Style[PedComponents.Torso2].TextureCount,
-                hats_variation = Game.PlayerPed.Style[PedProps.Hats].TextureCount,
-                glasses_variation = Game.PlayerPed.Style[PedProps.Glasses].TextureCount,
-                ears_variation = Game.PlayerPed.Style[PedProps.EarPieces].TextureCount,
-                watches_variation = Game.PlayerPed.Style[PedProps.Watches].TextureCount,
-                bracelets_variation = Game.PlayerPed.Style[PedProps.Wristbands].TextureCount
+                head_variations = 45,
+                masks_variations = Game.PlayerPed.Style[PedComponents.Head].TextureCount,
+                hair_variations = Game.PlayerPed.Style[PedComponents.Hair].TextureCount,
+                torso_variations = Game.PlayerPed.Style[PedComponents.Torso].TextureCount,
+                legs_variations = Game.PlayerPed.Style[PedComponents.Legs].TextureCount,
+                bags_variations = Game.PlayerPed.Style[PedComponents.Hands].TextureCount,
+                shoes_variations = Game.PlayerPed.Style[PedComponents.Shoes].TextureCount,
+                accessories_variations = Game.PlayerPed.Style[PedComponents.Special1].TextureCount,
+                undershirts_variations = Game.PlayerPed.Style[PedComponents.Special2].TextureCount,
+                bodyArmor_variations = Game.PlayerPed.Style[PedComponents.Special3].TextureCount,
+                decals_variations = Game.PlayerPed.Style[PedComponents.Textures].TextureCount,
+                tops_variations = Game.PlayerPed.Style[PedComponents.Torso2].TextureCount,
+                hats_variations = Game.PlayerPed.Style[PedProps.Hats].TextureCount,
+                glasses_variations = Game.PlayerPed.Style[PedProps.Glasses].TextureCount,
+                ears_variations = Game.PlayerPed.Style[PedProps.EarPieces].TextureCount,
+                watches_variations = Game.PlayerPed.Style[PedProps.Watches].TextureCount,
+                bracelets_variations = Game.PlayerPed.Style[PedProps.Wristbands].TextureCount
             });
+            Debug.WriteLine(jsonstring);
             SendNuiMessage(jsonstring);
         }
 
-        private void setClothesCall(string arg1, int arg2, int arg3)
+        private void setClothesCall(string arg1)
         {
-            foreach (PedComponents ps in (PedComponents[])Enum.GetValues(typeof(PedComponents)))
-            {
-                if (arg1 == ps.ToString())
-                    setComponentVariation(ps, arg2, arg3);
-            }
-
-            foreach (PedProps ps in (PedProps[])Enum.GetValues(typeof(PedProps)))
-            {
-                if (arg1 == ps.ToString())
-                    setComponentVariation(ps, arg2, arg3);
-            }
+            currentclothes = JsonConvert.DeserializeObject<ClothesClass>(arg1);
+            updateCharVisual(JsonConvert.SerializeObject(currentclothes));
         }
 
         private void exit(IDictionary<string, object> arg1, CallbackDelegate arg2)
@@ -409,81 +583,25 @@ namespace ClothesShop
             });
             SendNuiMessage(jsonstring);
             SetNuiFocus(false, false);
+            updateCharVisual(JsonConvert.SerializeObject(currentclothes));
         }
-
-        private void updateChar(IDictionary<string, object> arg1, CallbackDelegate arg2)
+        //char creation method
+        private void startCharacterCreation(int open)
         {
-            string part = arg1["part"].ToString();
-            int index = Convert.ToInt32(arg1["index"]);
-            int variation = Convert.ToInt32(arg1["variation"]);
-
-            setClothesCall(part, index, variation);
-        }
-
-        private void openUI()
-        {
-            Debug.WriteLine("openui");
+           
             string jsonstring;
             jsonstring = JsonConvert.SerializeObject(new
             {
-                toggle = 0,
+                toggle = open,
                 characreation = true
             });
             SendNuiMessage(jsonstring);
             SetNuiFocus(true, true);
-            lockHCamera = true;
-            lockVCamera = true;
+            inshop = true;
         }
 
-        private void setComponentVariation(PedComponents pc, int index, int variation)
-        {
-            if (Game.PlayerPed.Style[pc].Index != index)
-            {
-                if (Game.PlayerPed.Style[pc].IsVariationValid(index, variation))
-                    Game.PlayerPed.Style[pc].SetVariation(index, variation);
-            }
-        }
-        private void setComponentVariation(PedProps pc, int index, int variation)
-        {
-            if (Game.PlayerPed.Style[pc].Index != index)
-            {
-                if (Game.PlayerPed.Style[pc].IsVariationValid(index, variation))
-                    Game.PlayerPed.Style[pc].SetVariation(index, variation);
-            }
-        }
-        private void setClothes(
-            int face, int face_variation, int head, int head_variation,
-            int hair, int hair_variation, int torso, int torso_variation,
-            int legs, int legs_variation, int hands, int hands_variation,
-            int shoes, int shoes_variation, int special1, int special1_variation,
-            int special2, int special2_variation, int special3, int special3_variation,
-            int textures, int textures_variation, int torso2, int torso2_variation,
-            int hats, int hats_variation, int glasses, int glasses_variation,
-            int earpieces, int earpieces_variation, int watches, int watches_variation,
-            int wristbands, int wristbands_variation
-            )
-        {
-
-            setComponentVariation(PedComponents.Face, face, face_variation);
-            setComponentVariation(PedComponents.Hair, hair, hair_variation);
-            setComponentVariation(PedComponents.Head, head, head_variation);
-            setComponentVariation(PedComponents.Hands, hands, hands_variation);
-            setComponentVariation(PedComponents.Legs, legs, legs_variation);
-            setComponentVariation(PedComponents.Shoes, shoes, shoes_variation);
-            setComponentVariation(PedComponents.Special1, special1, special1_variation);
-            setComponentVariation(PedComponents.Special2, special2, special2_variation);
-            setComponentVariation(PedComponents.Special3, special3, special3_variation);
-            setComponentVariation(PedComponents.Textures, textures, textures_variation);
-            setComponentVariation(PedComponents.Torso, torso, torso_variation);
-            setComponentVariation(PedComponents.Torso2, torso2, torso2_variation);
-
-            setComponentVariation(PedProps.EarPieces, earpieces, earpieces_variation);
-            setComponentVariation(PedProps.Glasses, glasses, glasses_variation);
-            setComponentVariation(PedProps.Hats, hats, hats_variation);
-            setComponentVariation(PedProps.Watches, watches, watches_variation);
-            setComponentVariation(PedProps.Wristbands, wristbands, wristbands_variation);
-
-        }
+       
+        
 
     }
 }

@@ -9,129 +9,103 @@ using static CitizenFX.Core.Native.API;
 
 namespace characterUI
 {
+
+    class Timer
+    {
+        int _limit;
+        int _tempLimit;
+        bool _expired;
+
+        public int Limit { set { _tempLimit = value; _limit = CitizenFX.Core.Game.GameTime + _tempLimit; } }
+        public bool Expired
+        {
+            get
+            {
+
+                if (CitizenFX.Core.Game.GameTime > _limit)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+        }
+
+        public Timer(int handle)
+        {
+
+        }
+
+        public void Reset()
+        {
+            _limit = 0;
+            _tempLimit = 0;
+            _expired = false;
+        }
+    }
+
     public class characterCreationUI : BaseScript
     {
+
+        Timer t1;
         public characterCreationUI()
         {
-            EventHandlers["loginscr:createChar"] += new Action(createChar);
+            EventHandlers["charui:showmoney"] += new Action<int, int>(showmoney);
+            EventHandlers["charui:showThirst"] += new Action<float>(showThirst);
+            EventHandlers["charui:showHunger"] += new Action<float>(showHunger);
 
             //register net event to change appearance
+
+            t1 = new Timer(0);
+            t1.Limit = 10000;
+
+            Tick += OnTick;
         }
 
-        private void createChar()
+        private static void DisplayText(float x, float y, string text)
         {
-            Debug.WriteLine("ALL ped things");
-
-            Ped playerped = Game.PlayerPed;
-
-            /*
-             public int Count { get; }
-        public int Index { get; set; }
-        public int TextureCount { get; }
-        public int TextureIndex { get; set; }
-        public bool HasVariations { get; }
-        public bool HasTextureVariations { get; }
-        public bool HasAnyVariations { get; }
-
-        public bool IsVariationValid(int index, int textureIndex = 0);
-        public bool SetVariation(int index, int textureIndex = 0);
-        public override string ToString();
-             */
-            PedComponent[] pcs = playerped.Style.GetAllComponents();
-            Debug.WriteLine("pcs"+pcs.Length.ToString());
-
-            foreach (PedComponent pc in pcs)
-            {
-                Debug.WriteLine(pc.ToString());
-                Debug.WriteLine(pc.Count.ToString());
-                for (int i = 0; i < pc.Count; i++)
-                {
-                    Debug.WriteLine($"Component {pc.ToString()} with index {i.ToString()}");
-                    //pc.Index = i;
-                    Debug.WriteLine($"has {pc.TextureCount.ToString()} Textures");
-                }
-
-
-            }
-            PedProp[] pps = playerped.Style.GetAllProps();
-            Debug.WriteLine("pps"+pps.Length.ToString());
-            foreach (PedProp pp in pps)
-            {
-                Debug.WriteLine(pp.ToString());
-                Debug.WriteLine(pp.Count.ToString());
-                for (int i = 0; i < pp.Count; i++)
-                {
-                    Debug.WriteLine($"Prop {pp.ToString()} with index {i.ToString()}");
-                    //pp.Index = i;
-                    Debug.WriteLine($"has {pp.TextureCount.ToString()} Textures");
-                }
-
-
-            }
-
-            Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-            Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-            bool valid = playerped.Style[PedComponents.Special2].IsVariationValid(12);
-            Debug.WriteLine(valid.ToString());
-            if (valid) playerped.Style[PedComponents.Special2].SetVariation(12);
-            /*
-            Dictionary<int, List<int>>[] components = new Dictionary<int, List<int>>[12];
-            for (int i = 0; i< 12; i++)
-            {
-                components[i] = new Dictionary<int, List<int>>();
-            }
-            foreach (PedComponents pc in (PedComponents[])Enum.GetValues(typeof(PedComponents)))
-            {
-                int drawable = 361;
-                for (int i = 0; i < drawable; i++)
-                {
-                    int variation = 200;
-                    List<int> variations = new List<int>();
-                    for (int j = 0; j < variation; j++)
-                    {
-                        //Debug.WriteLine("j:" + j);
-                        if (playerped.Style[pc].IsVariationValid(i, j))
-                        {
-                            //Debug.WriteLine("valid found");
-                            variations.Add(j);
-                        }
-                    }
-                    components[i] = new Dictionary<int, List<int>>() { { i, variations } };
-                    //Debug.WriteLine(i + " done.");
-                }
-                //Debug.WriteLine(pc.ToString()+" done.");
-
-            }
-            
-            for (int i = 0; i < 12; i++)
-            Debug.WriteLine(components[i].ToString());*/
-
-            //
-            //Debug.WriteLine(playerped.Style[PedComponents.Torso2].IsVariationValid(269).ToString());
-
-            foreach (PedProps pc in (PedProps[])Enum.GetValues(typeof(PedProps)))
-            {
-                //Debug.WriteLine(pc.ToString() + " :Index: " + playerped.Style[pc].Index.ToString());
-
-                PedProp pedprop = playerped.Style[pc];
-                //Debug.WriteLine($"{pc.ToString()} : {pedprop.Count.ToString()}");
-
-                if (pedprop.HasTextureVariations)
-                {
-                    //Debug.WriteLine($"{pc.ToString()} : {pedprop.TextureCount} Variations");
-                    
-                }
-            }
-
-            //playerped.Style.SetDefaultClothes();
-            //uint modelhashed = (uint)GetHashKey("mp_f_freemode_01");
-            //RequestModel(modelhashed);
-            //while (!HasModelLoaded(modelhashed))
-            //RequestModel(modelhashed);
-            //SetPlayerModel(Game.Player.ServerId, modelhashed);
-            Debug.WriteLine(Game.Player.ServerId.ToString());
-            //trigger UI
-            //throw new NotImplementedException();
+            BeginTextCommandDisplayText("STRING");
+            AddTextComponentString(text);
+            SetTextScale(1f, .5f);
+            SetTextCentre(true);
+            EndTextCommandDisplayText(x, y);
         }
+
+        private void showHunger(float hunger)
+        {
+            DisplayText(.95f, .5f, $"hunger: {hunger}");
+        }
+
+        private void showThirst(float thirst)
+        {
+            DisplayText(.95f, .55f, $"thirst: {thirst}");
+        }
+
+        private async Task OnTick()
+        {
+            if (t1.Expired)
+            {
+                showcashUI = false;
+            }
+
+            await Task.FromResult(0);
+        }
+
+        int moneyhand = 0;
+        int moneybank = 0;
+        bool showcashUI = false;
+
+        private void showmoney(int hand, int bank)
+        {
+            moneyhand = hand;
+            moneybank = bank;
+            showcashUI = true;
+
+        }
+
+
     }
 }

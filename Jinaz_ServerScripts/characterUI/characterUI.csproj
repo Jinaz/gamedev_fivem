@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CharacterAtts.cs" />
     <Compile Include="characterCreationUI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

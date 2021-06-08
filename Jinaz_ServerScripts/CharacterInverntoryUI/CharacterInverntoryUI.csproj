@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B732A2A1-2F40-43D9-9BB6-361C211A0316}</ProjectGuid>
+    <ProjectGuid>{28F79DB4-BCDF-4122-8346-BBF2F71D5AF8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>loginscript</RootNamespace>
-    <AssemblyName>loginscript.net</AssemblyName>
+    <RootNamespace>CharacterInverntoryUI</RootNamespace>
+    <AssemblyName>CharacterInverntoryUI.net</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -32,7 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CitizenFX.Core">
-      <HintPath>..\..\..\..\VSCoding\ConsoleCommands\packages\CitizenFX.Core.dll</HintPath>
+      <HintPath>..\packages\CitizenFX.Core.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\..\VSCoding\ConsoleCommands\packages\Newtonsoft.Json.13.0.1\lib\netstandard2.0\Newtonsoft.Json.dll</HintPath>
@@ -47,12 +47,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CharacterAtts.cs" />
-    <Compile Include="loginscript.cs" />
+    <Compile Include="CharacterInvUI.cs" />
+    <Compile Include="Inventory.cs" />
+    <Compile Include="ItemsData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /y /d "$(TargetPath)" "A:\workspace\5m\txData\CFXDefault_6F0152.base\resources\loginscript\"</PostBuildEvent>
+    <PostBuildEvent>xcopy /y /d "$(TargetPath)" "A:\workspace\5m\txData\CFXDefault_6F0152.base\resources\CharacterInvUI\"</PostBuildEvent>
   </PropertyGroup>
 </Project>

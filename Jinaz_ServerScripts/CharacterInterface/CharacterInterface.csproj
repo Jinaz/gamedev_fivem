@@ -51,7 +51,6 @@
     <Compile Include="CharacterInterface.cs" />
     <Compile Include="CharaLooks.cs" />
     <Compile Include="EntityDecoration.cs" />
-    <Compile Include="Inventory.cs" />
     <Compile Include="ItemsData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

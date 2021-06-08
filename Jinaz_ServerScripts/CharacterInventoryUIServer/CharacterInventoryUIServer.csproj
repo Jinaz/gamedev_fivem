@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B732A2A1-2F40-43D9-9BB6-361C211A0316}</ProjectGuid>
+    <ProjectGuid>{8F68C7F2-9364-4E93-8D90-9B6E5F8E1EDC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>loginscript</RootNamespace>
-    <AssemblyName>loginscript.net</AssemblyName>
+    <RootNamespace>CharacterInventoryUIServer</RootNamespace>
+    <AssemblyName>CharacterInventoryUIServer.net</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,8 +31,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CitizenFX.Core">
-      <HintPath>..\..\..\..\VSCoding\ConsoleCommands\packages\CitizenFX.Core.dll</HintPath>
+    <Reference Include="CitizenFX.Core.Server">
+      <HintPath>..\packages\CitizenFX.Core.Server.dll</HintPath>
+    </Reference>
+    <Reference Include="MySqlConnector">
+      <HintPath>..\packages\MySqlConnector.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\..\VSCoding\ConsoleCommands\packages\Newtonsoft.Json.13.0.1\lib\netstandard2.0\Newtonsoft.Json.dll</HintPath>
@@ -47,12 +50,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CharacterAtts.cs" />
-    <Compile Include="loginscript.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /y /d "$(TargetPath)" "A:\workspace\5m\txData\CFXDefault_6F0152.base\resources\loginscript\"</PostBuildEvent>
+    <PostBuildEvent>xcopy /y /d "$(TargetPath)" "A:\workspace\5m\txData\CFXDefault_6F0152.base\resources\CharacterInvUI\"</PostBuildEvent>
   </PropertyGroup>
 </Project>

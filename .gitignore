@@ -62,3 +62,7 @@ Jinaz_ServerScripts/lscustomsserver/obj/
 /Jinaz_ServerScripts/ClothesShop/bin/Debug
 /Jinaz_ServerScripts/ClothesShop/obj/Debug
 /Jinaz_ServerScripts/characterUI/obj/Debug
+/Jinaz_ServerScripts/CharacterInventoryUIServer/obj/Debug
+/Jinaz_ServerScripts/CharacterInverntoryUI/obj/Debug
+/Jinaz_ServerScripts/CharacterInventoryUIServer/bin/Debug
+/Jinaz_ServerScripts/CharacterInverntoryUI/bin/Debug

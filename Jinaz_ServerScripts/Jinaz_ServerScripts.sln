@@ -31,6 +31,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "characterUI", "characterUI\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClothesShop", "ClothesShop\ClothesShop.csproj", "{92ACE06C-D646-4C68-A6D9-ECAB604BB68D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CharacterInverntoryUI", "CharacterInverntoryUI\CharacterInverntoryUI.csproj", "{28F79DB4-BCDF-4122-8346-BBF2F71D5AF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CharacterInventoryUIServer", "CharacterInventoryUIServer\CharacterInventoryUIServer.csproj", "{8F68C7F2-9364-4E93-8D90-9B6E5F8E1EDC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +97,14 @@ Global
 		{92ACE06C-D646-4C68-A6D9-ECAB604BB68D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92ACE06C-D646-4C68-A6D9-ECAB604BB68D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92ACE06C-D646-4C68-A6D9-ECAB604BB68D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28F79DB4-BCDF-4122-8346-BBF2F71D5AF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28F79DB4-BCDF-4122-8346-BBF2F71D5AF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28F79DB4-BCDF-4122-8346-BBF2F71D5AF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28F79DB4-BCDF-4122-8346-BBF2F71D5AF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F68C7F2-9364-4E93-8D90-9B6E5F8E1EDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F68C7F2-9364-4E93-8D90-9B6E5F8E1EDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F68C7F2-9364-4E93-8D90-9B6E5F8E1EDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F68C7F2-9364-4E93-8D90-9B6E5F8E1EDC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

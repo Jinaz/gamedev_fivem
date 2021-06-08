@@ -38,15 +38,16 @@ namespace loginscript
 
         Ped playerped;
         bool initialized = false;
-        List<UIcard> cards = new List<UIcard>();
+        
+        CharacterInterface.CharacterAtts[] cas = new CharacterInterface.CharacterAtts[5];
         public loginscript()
         {
             EventHandlers["loginscr:newPlayer"] += new Action(newPlayer);
             EventHandlers["onClientResourceStart"] += new Action<string>(OnResourceStartAsync);
-            EventHandlers["loginscr:response"] += new Action<string>(responsePrint);
-            EventHandlers["loginscr:respondPeds"] += new Action<Dictionary<string, string>[]>(respPeds);
+            //EventHandlers["loginscr:response"] += new Action<string>(responsePrint);
+            //EventHandlers["loginscr:respondPeds"] += new Action<Dictionary<string, string>[]>(respPeds);
 
-            EventHandlers["loginscr:displayCharas"] += new Action<bool, string, string, string, string, string>(createUI);
+            EventHandlers["loginscr:displayCharas"] += new Action<string, int>(createUI);
             //SetNuiFocus(true,true);
 
             RegisterNuiCallbackType("createChar");
@@ -60,65 +61,60 @@ namespace loginscript
 
         private void selectChar(IDictionary<string, object> arg1, CallbackDelegate arg2)
         {
+
+            int choice = Convert.ToInt32(arg1["chosenchar"].ToString());
+
+
+            TriggerEvent("charinf:setCharInf", JsonConvert.SerializeObject(cas[choice]));
+            string steamidid = cas[choice].steamcharid;
+            //find skin and apply with steamid_id
+            //trigger server event then set skin
+            TriggerEvent("loginscr:tpToSpawn");
             throw new NotImplementedException();
             //Trigger tp script after setting chara
         }
 
         private void createTriggered(IDictionary<string, object> arg1, CallbackDelegate arg2)
         {
-            TriggerEvent("clths:changeClths");
+            int slotnum = Convert.ToInt32(arg1["slotnum"].ToString());
+            TriggerEvent("clths:changeClths", 0 );
         }
 
         private void newPlayer()
         {
-            string jsonstring = "{\"cardscount\":" + 0 + "}";
-            Debug.WriteLine(jsonstring);
-            //SendNuiMessage(jsonstring);
-            Debug.WriteLine(jsonstring);
-            //SetNuiFocus(true, true);
-            TriggerEvent("clths:changeClths");
-        }
-
-        private void createUI(bool arg1, string arg2, string arg3, string arg4, string arg5, string steamCharID)
-        {
-            if (arg1)
+            string jss = JsonConvert.SerializeObject(new
             {
-                cards.Add(new UIcard(arg2, arg3, Convert.ToInt32(arg4), Convert.ToInt32(arg4), steamCharID));
+                trigger = true,
+                cardnumber = 5
+            });
 
-                string jsonstring = "{";
-                int ucnumber = 0;
-                if (cards.Any())
-                {
-                    jsonstring += "\"name" + 0 + "\": \"" + cards[0].name + "\", \"job" + 0 + "\":\"" + cards[0].job + "\", \"moneyhand" + 0 + "\":" + cards[0].moneyhand + ",\"moneybank" + 0 + "\":" + cards[0].moneyhand + ",\"charid" + 0 + "\":\"" + cards[0].steamCharID + "\"";
-                    for (ucnumber = 1; ucnumber < cards.Count; ucnumber++)
-                    {
-                        jsonstring += ",\"name" + ucnumber + "\": \"" + cards[ucnumber].name + "\", \"job" + ucnumber + "\":\"" + cards[ucnumber].job + "\", \"moneyhand" + ucnumber + "\":" + cards[ucnumber].moneyhand + ",\"moneybank" + ucnumber + "\":" + cards[ucnumber].moneyhand + ",\"charid" + ucnumber + "\":\"" + cards[ucnumber].steamCharID + "\"";
-                    }
-                }
-                
-
-                jsonstring += ",\"cardscount\":" + ucnumber + "}";
-
-                //SendNuiMessage(jsonstring);
-                Debug.WriteLine(jsonstring);
-                //SetNuiFocus(true, true);
-            }
-            else
-            {
-                cards.Add(new UIcard(arg2, arg3, Convert.ToInt32(arg4), Convert.ToInt32(arg4), steamCharID));
-            }
+            SendNuiMessage(jss);
+            SetNuiFocus(true, true);
         }
 
-        private void respPeds(Dictionary<string, string>[] arg2)
+
+        private void createUI(string jsonstring, int index)
         {
-            Console.WriteLine("method moved to charcterinterface");
+            CharacterInterface.CharacterAtts ca = JsonConvert.DeserializeObject<CharacterInterface.CharacterAtts>(jsonstring);
+            cas[index] = ca;
 
+            string jss = JsonConvert.SerializeObject(new {
+                trigger = true,
+                cardnumber = index,
+                charactername = ca.CharacterName,
+                hand = ca.moneyHand,
+                bank = ca.moneyBank,
+                job = ca.job
+
+            });
+
+            SendNuiMessage(jss);
+            SetNuiFocus(true, true);
         }
 
-        private void responsePrint(string obj)
-        {
-            Debug.WriteLine(obj);
-        }
+        
+
+        
 
         private async Task defaultModel()
         {
@@ -150,47 +146,7 @@ namespace loginscript
 
                 Debug.WriteLine("server event triggered");
 
-                
-
-
-                //TODO connect SQL on start
-                //get player data
-
-
-                /* some doc of the enum PedComponent
-                 Face = 0,
-        Head = 1,
-        Hair = 2,
-        Torso = 3,
-        Legs = 4,
-        Hands = 5,
-        Shoes = 6,
-        Special1 = 7,
-        Special2 = 8,
-        Special3 = 9,
-        Textures = 10,
-        Torso2 = 11
-                 */
-
-
-                /*PedProp
-                 * 
-                 * "Hats = 0,
-        Glasses = 1,
-        EarPieces = 2,
-        Unknown3 = 3,
-        Unknown4 = 4,
-        Unknown5 = 5,
-        Watches = 6,
-        Wristbands = 7,
-        Unknown8 = 8,
-        Unknown9 = 9"*/
-
-
-                //if first time login
-                //if steamid in table then not first time --> open character selection
-                //if not empty table
-                //
+                defaultModel();
                 initialized = true;
             }
 
@@ -245,7 +201,7 @@ namespace loginscript
             RegisterCommand("setClothes", new Action<int, List<object>, string>(async (source, args, raw) =>
             {
                 defaultModel();
-                TriggerEvent("clths:changeClths");
+                TriggerEvent("clths:changeClths", 0 );
 
                 //playerped.Style[PedComponents.Hair].Index = Convert.ToInt32(args[0]);
                 //bool valid = playerped.Style[PedComponents.Hair].IsVariationValid(Convert.ToInt32(args[0]), Convert.ToInt32(args[1]));

@@ -56,46 +56,68 @@ namespace CharacterInterface
         float consumptionRateHunger = 0.000005f;
         float consumedThirst = 0f;
         float consumedHunger = 0f;
-
-        bool inventoryinit = false;
+        
         Ped playerped;
-        Inventory inv;
+
         Timer t1;
 
-        CharacterAtts[] cas = new CharacterAtts[5];
-
-        string hunger_key = "_hunger_key";
-        string thirst_key = "_thirst_key";
+        CharacterAtts cas;
 
         bool initialized = false;
 
         public CharacterInterface()
         {
-            for (int i = 0; i < 5; i++)
-            {
-                cas[i] = new CharacterAtts();
-            }
+            cas = new CharacterAtts();
             hunger = 0.75f;
             thirst = 0.75f;
 
             t1 = new Timer(0);
             t1.Limit = 1000;
             playerped = Game.PlayerPed;
-            EntityDecoration.RegisterProperty(hunger_key, DecorationType.Float);
-            EntityDecoration.RegisterProperty(thirst_key, DecorationType.Float);
+            
             EventHandlers["onClientResourceStart"] += new Action<string>(OnClientResourceStart);
 
 
             //SetNuiFocus(false, false);
 
-            RegisterNuiCallbackType("exit");
-            EventHandlers["__cfx_nui:exit"] += new Action<IDictionary<string, object>, CallbackDelegate>(error);
-            EventHandlers["loginscr:setPlayerAtts"] += new Action<int, string, string, string, string, string, string, string, string, string, string, string, string>(setAtts);
-            //EventHandlers["loginscr:setCharacterAtts"] += new Action<string[][], int, int>(setCharAtts);
-            
+            EventHandlers["charinf:setCharInf"] += new Action<string>(setCharAtts);
+            EventHandlers["charinf:consumeItem"] += new Action<string, int>(consumeItem);
+            //EventHandlers["charinf:pay"] += new Action<int>(paymoneyhand);
+            //EventHandlers["charinf:paybank"] += new Action<int>(paymoneybank);
+            //EventHandlers["charinf:dropitem"] += new Action<int>(dropitem);
+            EventHandlers["charinf:checkoutMoney"] += new Action<int, int>(checkoutMoney);
 
             Tick += OnTick;
-            Tick += ItemUsage;
+            
+        }
+
+        private void checkoutMoney(int senderid, int cost)
+        {
+            if (senderid == 0) {
+                if (cas.moneyHand < cost)
+                {
+                    TriggerEvent("clths:checkoutFail", true);
+                }
+            }
+            throw new NotImplementedException();
+            //check money if not enough prompt message
+            //depending on senderid return a message to said sender
+        }
+
+        private void consumeItem(string itemname, int amount)
+        {
+            if (itemname == Enum.GetName(typeof(CharacterInverntoryUI.ItemsData), 6))
+            {
+                
+                thirst = thirst + 0.25f;
+                thirst = thirst > 1f ? 1f : thirst;
+            }
+            if (itemname == Enum.GetName(typeof(CharacterInverntoryUI.ItemsData), 8))
+            {
+                
+                hunger = hunger + 0.25f;
+                hunger = hunger > 1f ? 1f : hunger;
+            }
         }
 
         private void OnClientResourceStart(string resourceName)
@@ -105,108 +127,17 @@ namespace CharacterInterface
             Debug.WriteLine("chinfo startup successful");
         }
 
-        private void setCharAtts(string[][] arg2, int dim1, int dim2)
+        private void setCharAtts(string jsonstring)
         {
-
+            cas = JsonConvert.DeserializeObject<CharacterAtts>(jsonstring);
+            
         }
-
-        private void setAtts(int number, string steamidchara, string steamid, string charaName, string isjailed, string canspawnboat, string canspawnplane, string moneybank, string moneyhand, string job, string ispolice, string canspawntow, string isEMC)
-        {
-
-            //Console.WriteLine("HHHHH");
-            cas[number].CharacterName = charaName;
-            cas[number].isjailed = Convert.ToBoolean(isjailed);
-            cas[number].canspawnboat = Convert.ToBoolean(canspawnboat);
-            cas[number].canspawnplane = Convert.ToBoolean(canspawnplane);
-            cas[number].canspawntow = Convert.ToBoolean(canspawntow);
-            cas[number].moneyHand = Convert.ToInt32(moneyhand);
-            cas[number].moneyBank = Convert.ToInt32(moneybank);
-            cas[number].job = job;
-            cas[number].ispolice = Convert.ToBoolean(ispolice);
-            cas[number].isEmc = Convert.ToBoolean(isEMC);
-
-            //Console.WriteLine($"something {cas[number].CharacterName}");
-            TriggerEvent("chat:addMessage", new
-            {
-                color = new[] { 255, 0, 0 },
-                args = new[] { "[TP]", $"{cas[number].CharacterName}" }
-            });
-        }
-
-
-        private void error(IDictionary<string, object> arg1, CallbackDelegate arg2)
-        {
-            string jsonstring;
-            jsonstring = JsonConvert.SerializeObject(new
-            {
-                toggle = false
-            });
-            SendNuiMessage(jsonstring);
-            SetNuiFocus(false, false);
-        }
-
-        private async Task ItemUsage()
-        {
-            inv.items[0] = ItemsData.SM_WATER;
-            //Console.WriteLine(ItemsData.SM_WATER.ToString("g"));
-            if (!playerped.IsInVehicle()
-                || (playerped.IsInVehicle()
-                && playerped.CurrentVehicle.Driver != playerped))
-                if (Game.IsControlJustReleased(0, Control.Talk))
-                {
-
-                    //open UI
-
-                    string jsonstring;
-                    jsonstring = JsonConvert.SerializeObject(new
-                    {
-                        toggle = true
-                    });
-                    SendNuiMessage(jsonstring);
-
-                    int slotnumber = 0;
-                    SetNuiFocus(true, true);
-                    UseItem(inv.items[0], slotnumber);
-                }
-        }
-
-        private void UseItem(ItemsData itemnum, int slotnumber)
-        {
-            if (itemnum == ItemsData.SM_WATER)
-            {
-                inv.items[slotnumber] = ItemsData.EMPTY;
-                thirst = thirst + 0.25f;
-                thirst = thirst > 1f ? 1f : thirst;
-            }
-            if (itemnum == ItemsData.SM_FOOD)
-            {
-                inv.items[slotnumber] = ItemsData.EMPTY;
-                hunger = hunger + 0.25f;
-                hunger = hunger > 1f ? 1f : hunger;
-            }
-
-        }
-
-        private static void DisplayText(float x, float y, string text)
-        {
-            BeginTextCommandDisplayText("STRING");
-            AddTextComponentString(text);
-            SetTextScale(1f, .5f);
-            SetTextCentre(true);
-            EndTextCommandDisplayText(x, y);
-        }
+        
+        
 
         private async Task OnTick()
         {
-            if (!inventoryinit)
-            {
-                initInv(playerped);
-
-                inventoryinit = true;
-            }
-
-
-
+           
             if (playerped.IsRunning)
             {
                 consumedThirst += consumptionRateThirst * 1.5f;
@@ -230,53 +161,11 @@ namespace CharacterInterface
                 consumedHunger = 0f;
             }
 
-            DisplayText(.95f, .55f, $"thirst: {thirst}");
-            DisplayText(.95f, .5f, $"hunger: {hunger}");
+
+            TriggerEvent("charui:showHunger", hunger);
+            TriggerEvent("charui:showThirst", thirst);
 
             await Task.FromResult(0);
         }
-
-        private void initInv(Ped playerped)
-        {
-            inv = new Inventory();
-        }
-
-        private Ped setLook(Ped playerped)
-        {/* some doc of the enum PedComponent
-                 Face = 0,
-        Head = 1,
-        Hair = 2,
-        Torso = 3,
-        Legs = 4,
-        Hands = 5,
-        Shoes = 6,
-        Special1 = 7,
-        Special2 = 8,
-        Special3 = 9,
-        Textures = 10,
-        Torso2 = 11
-                 */
-
-
-            /*PedProp
-             * 
-             * "Hats = 0,
-    Glasses = 1,
-    EarPieces = 2,
-    Unknown3 = 3,
-    Unknown4 = 4,
-    Unknown5 = 5,
-    Watches = 6,
-    Wristbands = 7,
-    Unknown8 = 8,
-    Unknown9 = 9"*/
-
-            playerped.Style[PedComponents.Face].SetVariation(0, 0);
-            Debug.WriteLine(playerped.Style[PedComponents.Face].Count.ToString());
-            Debug.WriteLine(playerped.Style[PedComponents.Face].Count.ToString());
-            return playerped;
-        }
-
-
     }
 }
