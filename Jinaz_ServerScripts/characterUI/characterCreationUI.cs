@@ -47,15 +47,16 @@ namespace characterUI
         }
     }
 
+    //class to display any stat related with character
     public class characterCreationUI : BaseScript
     {
 
         Timer t1;
         public characterCreationUI()
         {
-            EventHandlers["charui:showmoney"] += new Action<int, int>(showmoney);
-            EventHandlers["charui:showThirst"] += new Action<float>(showThirst);
-            EventHandlers["charui:showHunger"] += new Action<float>(showHunger);
+            EventHandlers["charinfUI:showmoney"] += new Action<int, int>(showmoney);
+            EventHandlers["charinfUI:showThirst"] += new Action<float>(showThirst);
+            EventHandlers["charinfUI:showHunger"] += new Action<float>(showHunger);
 
             //register net event to change appearance
 
@@ -73,7 +74,7 @@ namespace characterUI
             SetTextCentre(true);
             EndTextCommandDisplayText(x, y);
         }
-
+        //should add a flag to undisplay the hunger and thirst one day
         private void showHunger(float hunger)
         {
             DisplayText(.95f, .5f, $"hunger: {hunger}");
@@ -84,6 +85,7 @@ namespace characterUI
             DisplayText(.95f, .55f, $"thirst: {thirst}");
         }
 
+        //show money only for a duration of time
         private async Task OnTick()
         {
             if (t1.Expired)

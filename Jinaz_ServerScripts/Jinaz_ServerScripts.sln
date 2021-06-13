@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CharacterInverntoryUI", "Ch
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CharacterInventoryUIServer", "CharacterInventoryUIServer\CharacterInventoryUIServer.csproj", "{8F68C7F2-9364-4E93-8D90-9B6E5F8E1EDC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClothesShopServer", "ClothesShopServer\ClothesShopServer.csproj", "{1E415B10-168E-4663-8C9A-082BC8DC382D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +107,10 @@ Global
 		{8F68C7F2-9364-4E93-8D90-9B6E5F8E1EDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F68C7F2-9364-4E93-8D90-9B6E5F8E1EDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F68C7F2-9364-4E93-8D90-9B6E5F8E1EDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E415B10-168E-4663-8C9A-082BC8DC382D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E415B10-168E-4663-8C9A-082BC8DC382D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E415B10-168E-4663-8C9A-082BC8DC382D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E415B10-168E-4663-8C9A-082BC8DC382D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

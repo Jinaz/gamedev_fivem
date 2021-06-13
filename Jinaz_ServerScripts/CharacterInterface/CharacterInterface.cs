@@ -65,6 +65,7 @@ namespace CharacterInterface
 
         bool initialized = false;
 
+        //backend class for character attributes
         public CharacterInterface()
         {
             cas = new CharacterAtts();
@@ -87,8 +88,14 @@ namespace CharacterInterface
             //EventHandlers["charinf:dropitem"] += new Action<int>(dropitem);
             EventHandlers["charinf:checkoutMoney"] += new Action<int, int>(checkoutMoney);
 
+            EventHandlers["charinf:showMoney"] += new Action(showMoney);
+
             Tick += OnTick;
-            
+        }
+
+        private void showMoney()
+        {
+            TriggerEvent("charinfUI:showmoney", cas.moneyHand, cas.moneyBank);
         }
 
         private void checkoutMoney(int senderid, int cost)
@@ -98,8 +105,12 @@ namespace CharacterInterface
                 {
                     TriggerEvent("clths:checkoutFail", true);
                 }
+                else
+                {
+                    cas.moneyHand = cas.moneyHand - cost;
+                }
             }
-            throw new NotImplementedException();
+            
             //check money if not enough prompt message
             //depending on senderid return a message to said sender
         }
@@ -162,8 +173,8 @@ namespace CharacterInterface
             }
 
 
-            TriggerEvent("charui:showHunger", hunger);
-            TriggerEvent("charui:showThirst", thirst);
+            TriggerEvent("charinfUI:showHunger", hunger);
+            TriggerEvent("charinfUI:showThirst", thirst);
 
             await Task.FromResult(0);
         }

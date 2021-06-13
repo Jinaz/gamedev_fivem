@@ -53,7 +53,7 @@ namespace ClothesShop
             //EventHandlers["clths:saveinDB"] += new Action<string>(loadLooks);
 
             //create done so save to database
-            EventHandlers["clths:changeClths"] += new Action<int>(startCharacterCreation);
+            EventHandlers["clths:createChar"] += new Action<int>(startCharacterCreation);
             RegisterNuiCallbackType("creationDone");
             EventHandlers["__cfx_nui:creationDone"] += new Action<IDictionary<string, object>, CallbackDelegate>(creationDone);
             
@@ -178,7 +178,8 @@ namespace ClothesShop
             float neckWidth = clothes.neckWidth;
             SetPedFaceFeature(pedid, 0, neckWidth);
         }
-
+        
+        //from charinterface after checking money
         private void checkoutReturned(bool failed)
         {
             if (failed)
@@ -187,6 +188,7 @@ namespace ClothesShop
             }
         }
 
+        //from UI after changes to char
         private void checkout(IDictionary<string, object> arg1, CallbackDelegate arg2)
         {
             
@@ -197,6 +199,7 @@ namespace ClothesShop
 
         }
 
+        //from shop locations class upon enterin shop 
         private void entershop()
         {
             string jsonstring;
@@ -266,21 +269,13 @@ namespace ClothesShop
             inshop = true;
         }
 
+        //control camera while in shop
         private void unlockcam(IDictionary<string, object> arg1, CallbackDelegate arg2)
         {
             SetNuiFocus(false, false);
         }
-
-        public void InstructChangeView()
-        {
-            buttons.CallFunction("CLEAR_ALL");
-            buttons.CallFunction("TOGGLE_MOUSE_BUTTONS", 0);
-            buttons.CallFunction("CREATE_CONTAINER");
-
-            buttons.CallFunction("SET_DATA_SLOT", 0, Function.Call<string>((Hash)0x0499D7B09FC9B407, 2, (int)viewToggleControl, false), "ToggleMouse");
-
-            buttons.CallFunction("DRAW_INSTRUCTIONAL_BUTTONS", -1);
-        }
+        
+        //while camera unlocked and in shop
         private async Task OnTick()
         {
             //if (lockHCamera) SetGameplayCamRelativeHeading(-1 * GetGameplayCamRelativeHeading());
@@ -292,6 +287,18 @@ namespace ClothesShop
             {
                 SetNuiFocus(true, true);
             }
+        }
+
+        //used in OnTick to show how to change back to UI
+        public void InstructChangeView()
+        {
+            buttons.CallFunction("CLEAR_ALL");
+            buttons.CallFunction("TOGGLE_MOUSE_BUTTONS", 0);
+            buttons.CallFunction("CREATE_CONTAINER");
+
+            buttons.CallFunction("SET_DATA_SLOT", 0, Function.Call<string>((Hash)0x0499D7B09FC9B407, 2, (int)viewToggleControl, false), "ToggleMouse");
+
+            buttons.CallFunction("DRAW_INSTRUCTIONAL_BUTTONS", -1);
         }
 
         //creating a char
@@ -362,11 +369,11 @@ namespace ClothesShop
                 chinWidth: GetPedFaceFeature(ped.Handle, 17),
                 chinShape: GetPedFaceFeature(ped.Handle, 18),
                 neckWidth: GetPedFaceFeature(ped.Handle, 19));
-            Debug.WriteLine("A");
+            
             var jss = JsonConvert.SerializeObject(currentclothes);
-            Debug.WriteLine(jss);
+            
             //send to SQLDB
-            TriggerServerEvent("cbc:SaveLook", jss, playername,cgender);
+            TriggerServerEvent("loginscrserver:CharaCreationDone", jss, playername,cgender);
             //trigger TP script
         }
 
@@ -599,9 +606,6 @@ namespace ClothesShop
             SetNuiFocus(true, true);
             inshop = true;
         }
-
-       
-        
 
     }
 }

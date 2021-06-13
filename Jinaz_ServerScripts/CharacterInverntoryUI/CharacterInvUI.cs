@@ -61,6 +61,8 @@ namespace CharacterInverntoryUI
         private void UseItem(string itemname, int slotnumber)
         {
             inv.items[slotnumber] = ItemsData.EMPTY;
+
+            TriggerEvent("charinf:consumeItem", itemname, 1);
             Debug.WriteLine(itemname);
         }
     }
